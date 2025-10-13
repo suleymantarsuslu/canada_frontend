@@ -25,7 +25,7 @@ const App = () => {
   const isAlertShown = React.useRef(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const API_URL = 'https://api.canada-ankara.com';
+  const API_URL = 'https://backend.canada-ankara.com:5001';
 
   const showAlertOnce = (message) => {
     if (!isAlertShown.current) {

@@ -33,7 +33,7 @@ const CheckIn = () => {
     }
     try {
       const response = await axios.post(
-        'https://api.canada-ankara.com/api/admin/checkin',
+        'https://backend.canada-ankara.com:5001/api/admin/checkin',
         { qrId: id },
         {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },

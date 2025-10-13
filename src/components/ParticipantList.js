@@ -42,7 +42,7 @@ const ParticipantList = () => {
 
   const fetchGuests = async (page, search) => {
     try {
-      const response = await axios.get(`https://api.canada-ankara.com/api/admin/guests`, {
+      const response = await axios.get(`https://backend.canada-ankara.com:5001/api/admin/guests`, {
         params: { page: page + 1, limit: 10, search, attending: true },
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
@@ -64,7 +64,7 @@ const ParticipantList = () => {
 
   const fetchTotalGuests = async () => {
     try {
-      const response = await axios.get(`https://api.canada-ankara.com/api/admin/guests`, {
+      const response = await axios.get(`https://backend.canada-ankara.com:5001/api/admin/guests`, {
         params: { limit: 'all', attending: true },
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
@@ -78,7 +78,7 @@ const ParticipantList = () => {
 
   const fetchAllGuestsForReport = async () => {
     try {
-      const response = await axios.get(`https://api.canada-ankara.com/api/admin/guests`, {
+      const response = await axios.get(`https://backend.canada-ankara.com:5001/api/admin/guests`, {
         params: { limit: 'all' },
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
@@ -104,7 +104,7 @@ const ParticipantList = () => {
     setIsConfirmModalOpen(true);
     setConfirmModalAction(() => () => {
       axios
-        .delete(`https://api.canada-ankara.com/api/admin/guests/${id}`, {
+        .delete(`https://backend.canada-ankara.com:5001/api/admin/guests/${id}`, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
         })
         .then(() => {
@@ -131,7 +131,7 @@ const ParticipantList = () => {
     try {
       await Promise.all(
         selectedGuests.map(id =>
-          axios.delete(`https://api.canada-ankara.com/api/admin/guests/${id}`, {
+          axios.delete(`https://backend.canada-ankara.com:5001/api/admin/guests/${id}`, {
             headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
           })
         )

@@ -17,7 +17,7 @@ const ManualCheckIn = () => {
 
   const fetchGuests = async (page, search) => {
     try {
-      const response = await axios.get(`https://api.canada-ankara.com/api/admin/guests`, {
+      const response = await axios.get(`https://backend.canada-ankara.com:5001/api/admin/guests`, {
         params: { page: page + 1, limit: 10, search, attending: true },
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
@@ -40,7 +40,7 @@ const ManualCheckIn = () => {
     try {
       const qrId = guests.find(g => g._id === id).qrId;
       const response = await axios.post(
-        'https://api.canada-ankara.com/api/admin/checkin',
+        'https://backend.canada-ankara.com:5001/api/admin/checkin',
         { qrId },
         { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
       );
