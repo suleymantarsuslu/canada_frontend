@@ -1,5 +1,5 @@
 # Build stage
-FROM node:18-alpine as build
+FROM node:16-alpine as build
 
 # Çalışma dizinini ayarla
 WORKDIR /app
@@ -13,8 +13,8 @@ RUN npm ci
 # Kaynak kodunu kopyala
 COPY . .
 
-# React uygulamasını build et
-RUN npm run build
+# React uygulamasını build et (OpenSSL legacy provider ile)
+RUN NODE_OPTIONS="--openssl-legacy-provider" npm run build
 
 # Production stage
 FROM nginx:alpine
