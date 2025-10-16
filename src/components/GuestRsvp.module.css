@@ -79,12 +79,9 @@
   right: 0;
   bottom: 0;
   left: 0;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  opacity: 0.15;
+  background: radial-gradient(circle at 50% 50%, rgba(138, 43, 226, 0.05) 0%, transparent 70%);
+  opacity: 0.3;
   pointer-events: none;
-  filter: brightness(0.8);
 }
 
 /* Halloween Element Animasyonları */
