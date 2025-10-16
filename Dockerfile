@@ -14,7 +14,7 @@ RUN npm install
 COPY . .
 
 # Build React app (with OpenSSL legacy provider for Node 16)
-RUN NODE_OPTIONS=--openssl-legacy-provider npm run build
+RUN node --openssl-legacy-provider node_modules/.bin/react-scripts build
 
 # Production stage
 FROM nginx:alpine
