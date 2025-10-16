@@ -467,12 +467,14 @@ const GuestRsvp = () => {
           className={styles.containerBackground}
           style={{ backgroundImage: `url(${CanadaFlag})` }}
         ></div>
-        <div className={`${styles.mapleLeaf} top-10 left-20`}><MapleLeaf /></div>
-        <div className={`${styles.mapleLeaf} bottom-20 right-30`}><MapleLeaf /></div>
-        <div className={`${styles.mapleLeaf} top-40 right-10`}><MapleLeaf /></div>
-        <div className={`${styles.mapleLeaf} bottom-10 left-30`}><MapleLeaf /></div>
-        <div className={`${styles.mapleLeaf} top-20 right-60`}><MapleLeaf /></div>
-        <div className={`${styles.mapleLeaf} bottom-40 left-60`}><MapleLeaf /></div>
+        <div className={`${styles.halloweenFloat} ${styles.pumpkin1}`}><Pumpkin /></div>
+        <div className={`${styles.halloweenFloat} ${styles.ghost1}`}><Ghost /></div>
+        <div className={`${styles.halloweenFloat} ${styles.bat1}`}><Bat /></div>
+        <div className={`${styles.halloweenFloat} ${styles.spider1}`}><Spider /></div>
+        <div className={`${styles.halloweenFloat} ${styles.candy1}`}><Candy /></div>
+        <div className={`${styles.halloweenFloat} ${styles.pumpkin2}`}><Pumpkin /></div>
+        <div className={`${styles.halloweenFloat} ${styles.ghost2}`}><Ghost /></div>
+        <div className={`${styles.halloweenFloat} ${styles.bat2}`}><Bat /></div>
         <div className={styles.content}>
           <h1 className={styles.h1}>{t('eventTitle')}</h1>
           <p className={`${styles.textXl} font-sans`}>
@@ -492,12 +494,14 @@ const GuestRsvp = () => {
     return (
       <div className={styles.container}>
         <div className={styles.containerBackground} style={{ backgroundImage: `url(${CanadaFlag})` }}></div>
-        <div className={`${styles.mapleLeaf} top-10 left-20`}><MapleLeaf /></div>
-        <div className={`${styles.mapleLeaf} bottom-20 right-30`}><MapleLeaf /></div>
-        <div className={`${styles.mapleLeaf} top-40 right-10`}><MapleLeaf /></div>
-        <div className={`${styles.mapleLeaf} bottom-10 left-30`}><MapleLeaf /></div>
-        <div className={`${styles.mapleLeaf} top-20 right-60`}><MapleLeaf /></div>
-        <div className={`${styles.mapleLeaf} bottom-40 left-60`}><MapleLeaf /></div>
+        <div className={`${styles.halloweenFloat} ${styles.pumpkin1}`}><Pumpkin /></div>
+        <div className={`${styles.halloweenFloat} ${styles.ghost1}`}><Ghost /></div>
+        <div className={`${styles.halloweenFloat} ${styles.bat1}`}><Bat /></div>
+        <div className={`${styles.halloweenFloat} ${styles.spider1}`}><Spider /></div>
+        <div className={`${styles.halloweenFloat} ${styles.candy1}`}><Candy /></div>
+        <div className={`${styles.halloweenFloat} ${styles.pumpkin2}`}><Pumpkin /></div>
+        <div className={`${styles.halloweenFloat} ${styles.ghost2}`}><Ghost /></div>
+        <div className={`${styles.halloweenFloat} ${styles.bat2}`}><Bat /></div>
         <div className={styles.content}>
           <h1 className={styles.h1}>{t('eventTitle')}</h1>
           <p className={`${styles.textXl} font-sans`}>
@@ -580,12 +584,14 @@ const GuestRsvp = () => {
           className={styles.containerBackground}
           style={{ backgroundImage: `url(${CanadaFlag})` }}
         ></div>
-        <div className={`${styles.mapleLeaf} top-10 left-20`}><MapleLeaf /></div>
-        <div className={`${styles.mapleLeaf} bottom-20 right-30`}><MapleLeaf /></div>
-        <div className={`${styles.mapleLeaf} top-40 right-10`}><MapleLeaf /></div>
-        <div className={`${styles.mapleLeaf} bottom-10 left-30`}><MapleLeaf /></div>
-        <div className={`${styles.mapleLeaf} top-20 right-60`}><MapleLeaf /></div>
-        <div className={`${styles.mapleLeaf} bottom-40 left-60`}><MapleLeaf /></div>
+        <div className={`${styles.halloweenFloat} ${styles.pumpkin1}`}><Pumpkin /></div>
+        <div className={`${styles.halloweenFloat} ${styles.ghost1}`}><Ghost /></div>
+        <div className={`${styles.halloweenFloat} ${styles.bat1}`}><Bat /></div>
+        <div className={`${styles.halloweenFloat} ${styles.spider1}`}><Spider /></div>
+        <div className={`${styles.halloweenFloat} ${styles.candy1}`}><Candy /></div>
+        <div className={`${styles.halloweenFloat} ${styles.pumpkin2}`}><Pumpkin /></div>
+        <div className={`${styles.halloweenFloat} ${styles.ghost2}`}><Ghost /></div>
+        <div className={`${styles.halloweenFloat} ${styles.bat2}`}><Bat /></div>
         <div className={styles.content}>
           <h1 className={styles.h1}>{t('eventTitle')}</h1>
           <p className={`${styles.textXl} font-sans`}>
@@ -665,12 +671,14 @@ const GuestRsvp = () => {
           className={styles.containerBackground}
           style={{ backgroundImage: `url(${CanadaFlag})` }}
         ></div>
-        <div className={`${styles.mapleLeaf} top-10 left-20`}><MapleLeaf /></div>
-        <div className={`${styles.mapleLeaf} bottom-20 right-30`}><MapleLeaf /></div>
-        <div className={`${styles.mapleLeaf} top-40 right-10`}><MapleLeaf /></div>
-        <div className={`${styles.mapleLeaf} bottom-10 left-30`}><MapleLeaf /></div>
-        <div className={`${styles.mapleLeaf} top-20 right-60`}><MapleLeaf /></div>
-        <div className={`${styles.mapleLeaf} bottom-40 left-60`}><MapleLeaf /></div>
+        <div className={`${styles.halloweenFloat} ${styles.pumpkin1}`}><Pumpkin /></div>
+        <div className={`${styles.halloweenFloat} ${styles.ghost1}`}><Ghost /></div>
+        <div className={`${styles.halloweenFloat} ${styles.bat1}`}><Bat /></div>
+        <div className={`${styles.halloweenFloat} ${styles.spider1}`}><Spider /></div>
+        <div className={`${styles.halloweenFloat} ${styles.candy1}`}><Candy /></div>
+        <div className={`${styles.halloweenFloat} ${styles.pumpkin2}`}><Pumpkin /></div>
+        <div className={`${styles.halloweenFloat} ${styles.ghost2}`}><Ghost /></div>
+        <div className={`${styles.halloweenFloat} ${styles.bat2}`}><Bat /></div>
         <div className={styles.content}>
           <h1 className={styles.h1}>{t('eventTitle')}</h1>
           <p className={`${styles.textXl} font-sans`}>
