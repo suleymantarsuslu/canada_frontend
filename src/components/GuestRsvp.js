@@ -368,6 +368,9 @@ const GuestRsvp = () => {
           <div className={`${styles.halloweenFloat} ${styles.ghost2}`}><Ghost /></div>
           <div className={`${styles.halloweenFloat} ${styles.bat2}`}><Bat /></div>
           <div className={styles.content}>
+            <p className={`${styles.textXl} font-sans`}>
+              Dear Colleagues,
+            </p>
             <h1 className={styles.h1}>{t('eventTitle')}</h1>
             <p className={`${styles.textXl} font-sans`}>
               {t('dear')} {guest.firstName} {guest.lastName}
@@ -497,6 +500,9 @@ const GuestRsvp = () => {
         <div className={`${styles.halloweenFloat} ${styles.ghost2}`}><Ghost /></div>
         <div className={`${styles.halloweenFloat} ${styles.bat2}`}><Bat /></div>
         <div className={styles.content}>
+          <p className={`${styles.textXl} font-sans`}>
+            Dear Colleagues,
+          </p>
           <h1 className={styles.h1}>{t('eventTitle')}</h1>
           <p className={`${styles.textXl} font-sans`}>
             {t('dear')} {guest.firstName} {guest.lastName}
@@ -587,6 +593,9 @@ const GuestRsvp = () => {
         <div className={`${styles.halloweenFloat} ${styles.ghost2}`}><Ghost /></div>
         <div className={`${styles.halloweenFloat} ${styles.bat2}`}><Bat /></div>
         <div className={styles.content}>
+          <p className={`${styles.textXl} font-sans`}>
+            Dear Colleagues,
+          </p>
           <h1 className={styles.h1}>{t('eventTitle')}</h1>
           <p className={`${styles.textXl} font-sans`}>
             {t('dear')} {guest.firstName} {guest.lastName}
@@ -668,6 +677,9 @@ const GuestRsvp = () => {
         <div className={`${styles.halloweenFloat} ${styles.ghost2}`}><Ghost /></div>
         <div className={`${styles.halloweenFloat} ${styles.bat2}`}><Bat /></div>
         <div className={styles.content}>
+          <p className={`${styles.textXl} font-sans`}>
+            Dear Colleagues,
+          </p>
           <h1 className={styles.h1}>{t('eventTitle')}</h1>
           <p className={`${styles.textXl} font-sans`}>
             {t('dear')} {guest.firstName} {guest.lastName}
