@@ -1,5 +1,5 @@
 # Build stage
-FROM node:16-alpine AS build
+FROM node:18-alpine AS build
 
 # Set working directory
 WORKDIR /app
@@ -13,8 +13,7 @@ RUN npm install
 # Copy source code
 COPY . .
 
-# Build React app (with OpenSSL legacy provider)
-ENV NODE_OPTIONS="--openssl-legacy-provider"
+# Build React app
 RUN npm run build
 
 # Production stage
