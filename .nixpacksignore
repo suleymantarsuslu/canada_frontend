@@ -1,2 +1,4 @@
 Dockerfile
 coolify.yml
+.git
+node_modules
