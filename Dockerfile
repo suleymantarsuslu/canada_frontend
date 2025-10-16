@@ -14,7 +14,8 @@ RUN npm ci
 COPY . .
 
 # React uygulamasını build et (OpenSSL legacy provider ile)
-RUN NODE_OPTIONS="--openssl-legacy-provider" npm run build
+ENV NODE_OPTIONS="--openssl-legacy-provider"
+RUN npm run build
 
 # Production stage
 FROM nginx:alpine
