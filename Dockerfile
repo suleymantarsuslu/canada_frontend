@@ -13,8 +13,8 @@ RUN npm install
 # Copy source code
 COPY . .
 
-# Build React app
-RUN npm run build
+# Build React app (with OpenSSL legacy provider for Node 18)
+RUN NODE_OPTIONS="--openssl-legacy-provider" npm run build
 
 # Production stage
 FROM nginx:alpine
