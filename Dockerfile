@@ -1,33 +1,33 @@
 # Build stage
 FROM node:16-alpine as build
 
-# Çalışma dizinini ayarla
+# Set working directory
 WORKDIR /app
 
-# Package dosyalarını kopyala
+# Copy package files
 COPY package*.json ./
 
-# Bağımlılıkları yükle
+# Install dependencies
 RUN npm ci
 
-# Kaynak kodunu kopyala
+# Copy source code
 COPY . .
 
-# React uygulamasını build et (OpenSSL legacy provider ile)
+# Build React app (with OpenSSL legacy provider)
 ENV NODE_OPTIONS="--openssl-legacy-provider"
 RUN npm run build
 
 # Production stage
 FROM nginx:alpine
 
-# Build edilmiş dosyaları nginx'e kopyala
+# Copy built files to nginx
 COPY --from=build /app/build /usr/share/nginx/html
 
-# Nginx konfigürasyonunu kopyala
+# Copy nginx configuration
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Port'u expose et
+# Expose port
 EXPOSE 3001
 
-# Nginx'i başlat
+# Start nginx
 CMD ["nginx", "-g", "daemon off;"]
