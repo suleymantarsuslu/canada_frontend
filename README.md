@@ -44,7 +44,7 @@ Coolify otomatik olarak:
 ## API Bağlantısı
 
 Frontend, backend API'sine şu adres üzerinden bağlanır:
-- **Backend URL**: `https://backend.canada-ankara.com:5001`
+- **Backend URL**: `https://backend.canada-ankara.com`
 
 ## Sayfalar
 

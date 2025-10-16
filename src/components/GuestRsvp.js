@@ -51,7 +51,7 @@ const GuestRsvp = () => {
   const [guestData, setGuestData] = useState({ firstName: '', lastName: '', email: '' });
   const [maxGuests, setMaxGuests] = useState(0);
 
-  const API_URL = 'https://backend.canada-ankara.com:5001';
+  const API_URL = 'https://backend.canada-ankara.com';
 
   const handleLanguageChange = (event) => {
     const selectedLanguage = event.target.value;

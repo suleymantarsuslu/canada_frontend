@@ -3,6 +3,7 @@ import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import { jwtDecode } from 'jwt-decode';
+import { API_URL } from './config';
 import Navbar from './components/Navbar';
 import Home from './components/Home';
 import CheckIn from './components/CheckIn';
@@ -25,7 +26,6 @@ const App = () => {
   const isAlertShown = React.useRef(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const API_URL = 'https://backend.canada-ankara.com:5001';
 
   const showAlertOnce = (message) => {
     if (!isAlertShown.current) {

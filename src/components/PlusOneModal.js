@@ -31,7 +31,7 @@ const PlusOneModal = ({ isOpen, onClose, guest, onUpdate, guestTypeSettings }) =
     
     setLoading(true);
     try {
-      const response = await axios.get(`https://backend.canada-ankara.com:5001/api/admin/guests/${guest._id}/plusones`, {
+      const response = await axios.get(`https://backend.canada-ankara.com/api/admin/guests/${guest._id}/plusones`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
       setPlusOnes(response.data.plusOnes || []);
@@ -52,7 +52,7 @@ const PlusOneModal = ({ isOpen, onClose, guest, onUpdate, guestTypeSettings }) =
 
     setLoading(true);
     try {
-      await axios.post(`https://backend.canada-ankara.com:5001/api/admin/guests/${guest._id}/plusones`, newPlusOne, {
+      await axios.post(`https://backend.canada-ankara.com/api/admin/guests/${guest._id}/plusones`, newPlusOne, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
       
@@ -78,7 +78,7 @@ const PlusOneModal = ({ isOpen, onClose, guest, onUpdate, guestTypeSettings }) =
 
     setLoading(true);
     try {
-      await axios.put(`https://backend.canada-ankara.com:5001/api/admin/guests/${guest._id}/plusones/${editingPlusOne.qrId}`, {
+      await axios.put(`https://backend.canada-ankara.com/api/admin/guests/${guest._id}/plusones/${editingPlusOne.qrId}`, {
         firstName: editingPlusOne.firstName,
         lastName: editingPlusOne.lastName,
         email: editingPlusOne.email
@@ -103,7 +103,7 @@ const PlusOneModal = ({ isOpen, onClose, guest, onUpdate, guestTypeSettings }) =
 
     setLoading(true);
     try {
-      await axios.delete(`https://backend.canada-ankara.com:5001/api/admin/guests/${guest._id}/plusones/${qrId}`, {
+      await axios.delete(`https://backend.canada-ankara.com/api/admin/guests/${guest._id}/plusones/${qrId}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
       

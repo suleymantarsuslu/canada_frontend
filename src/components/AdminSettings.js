@@ -39,7 +39,7 @@ const AdminSettings = () => {
       }
 
       try {
-        const response = await axios.get('https://backend.canada-ankara.com:5001/api/public/rsvp-status', {
+        const response = await axios.get('https://backend.canada-ankara.com/api/public/rsvp-status', {
           headers: { Authorization: `Bearer ${token}` },
         });
         console.log('RSVP durumu alındı:', response.data);
@@ -71,7 +71,7 @@ const AdminSettings = () => {
       }
 
       try {
-        const response = await axios.get('https://backend.canada-ankara.com:5001/api/admin/telegram-status', {
+        const response = await axios.get('https://backend.canada-ankara.com/api/admin/telegram-status', {
           headers: { Authorization: `Bearer ${token}` },
         });
         console.log('Telegram durumu alındı:', response.data);
@@ -101,7 +101,7 @@ const AdminSettings = () => {
       }
 
       try {
-        const response = await axios.get('https://backend.canada-ankara.com:5001/api/admin/guest-type-settings', {
+        const response = await axios.get('https://backend.canada-ankara.com/api/admin/guest-type-settings', {
           headers: { Authorization: `Bearer ${token}` },
         });
         console.log('Guest type ayarları alındı:', response.data);
@@ -132,7 +132,7 @@ const AdminSettings = () => {
 
     try {
       const response = await axios.post(
-        'https://backend.canada-ankara.com:5001/api/admin/guests/upload',
+        'https://backend.canada-ankara.com/api/admin/guests/upload',
         formData,
         {
           headers: {
@@ -188,7 +188,7 @@ const AdminSettings = () => {
     setConfirmModalAction(() => async () => {
       try {
         await axios.post(
-          'https://backend.canada-ankara.com:5001/api/admin/participants/reset-checkins',
+          'https://backend.canada-ankara.com/api/admin/participants/reset-checkins',
           {},
           { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
         );
@@ -210,12 +210,12 @@ const AdminSettings = () => {
       try {
         // Önce check-in durumlarını sıfırlama
         await axios.post(
-          'https://backend.canada-ankara.com:5001/api/admin/participants/reset-checkins',
+          'https://backend.canada-ankara.com/api/admin/participants/reset-checkins',
           {},
           { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
         );
         // Ardından katılımcı durumlarını sıfırlama
-        await axios.delete('https://backend.canada-ankara.com:5001/api/admin/participants', {
+        await axios.delete('https://backend.canada-ankara.com/api/admin/participants', {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
         });
         alert(t('participantsReset')); // Mevcut çeviri anahtarını kullanıyoruz
@@ -234,7 +234,7 @@ const AdminSettings = () => {
     setIsConfirmModalOpen(true);
     setConfirmModalAction(() => async () => {
       try {
-        await axios.delete('https://backend.canada-ankara.com:5001/api/admin/reset-all', {
+        await axios.delete('https://backend.canada-ankara.com/api/admin/reset-all', {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
         });
         alert(t('resetAllSuccess')); // Mevcut çeviri anahtarını kullanıyoruz
@@ -252,7 +252,7 @@ const AdminSettings = () => {
     setIsConfirmModalOpen(true);
     setConfirmModalAction(() => async () => {
       try {
-        await axios.delete('https://backend.canada-ankara.com:5001/api/admin/event/end', {
+        await axios.delete('https://backend.canada-ankara.com/api/admin/event/end', {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
         });
         alert(t('eventEndSuccess'));
@@ -276,7 +276,7 @@ const AdminSettings = () => {
 
     try {
       const response = await axios.post(
-        'https://backend.canada-ankara.com:5001/api/public/admin/toggle-rsvp',
+        'https://backend.canada-ankara.com/api/public/admin/toggle-rsvp',
         {},
         {
           headers: {
@@ -317,7 +317,7 @@ const AdminSettings = () => {
 
     try {
       const response = await axios.post(
-        'https://backend.canada-ankara.com:5001/api/admin/toggle-telegram',
+        'https://backend.canada-ankara.com/api/admin/toggle-telegram',
         {},
         {
           headers: {
@@ -412,7 +412,7 @@ const AdminSettings = () => {
       console.log('Rows to retry:', rowsToRetry);
 
       const response = await axios.post(
-        'https://backend.canada-ankara.com:5001/api/admin/guests/upload/retry',
+        'https://backend.canada-ankara.com/api/admin/guests/upload/retry',
         { rows: rowsToRetry },
         {
           headers: {
@@ -517,7 +517,7 @@ const AdminSettings = () => {
 
     try {
       const response = await axios.post(
-        'https://backend.canada-ankara.com:5001/api/admin/guest-type-settings',
+        'https://backend.canada-ankara.com/api/admin/guest-type-settings',
         { settings: guestTypeSettings },
         {
           headers: {

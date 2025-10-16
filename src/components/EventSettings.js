@@ -58,7 +58,7 @@ const EventSettings = () => {
 
   const fetchGuests = useCallback(async (page, search) => {
     try {
-      const response = await axios.get('https://backend.canada-ankara.com:5001/api/admin/guests', {
+      const response = await axios.get('https://backend.canada-ankara.com/api/admin/guests', {
         params: { page: page + 1, limit: 10, search },
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
@@ -74,7 +74,7 @@ const EventSettings = () => {
 
   const fetchAllGuests = useCallback(async (search) => {
     try {
-      const response = await axios.get('https://backend.canada-ankara.com:5001/api/admin/guests', {
+      const response = await axios.get('https://backend.canada-ankara.com/api/admin/guests', {
         params: { limit: 'all', search },
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
@@ -88,7 +88,7 @@ const EventSettings = () => {
 
   const fetchTotalGuests = useCallback(async () => {
     try {
-      const response = await axios.get('https://backend.canada-ankara.com:5001/api/admin/guests', {
+      const response = await axios.get('https://backend.canada-ankara.com/api/admin/guests', {
         params: { limit: 'all' },
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
@@ -101,7 +101,7 @@ const EventSettings = () => {
 
   const fetchGuestTypeSettings = useCallback(async () => {
     try {
-      const response = await axios.get('https://backend.canada-ankara.com:5001/api/admin/guest-type-settings', {
+      const response = await axios.get('https://backend.canada-ankara.com/api/admin/guest-type-settings', {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
       setGuestTypeSettings(response.data.settings);
@@ -115,7 +115,7 @@ const EventSettings = () => {
 const fetchInviters = useCallback(async (search = '') => {
   try {
     console.log('fetchInviters çağrıldı, arama terimi:', search);
-    const response = await axios.get('https://backend.canada-ankara.com:5001/api/admin/guests/employee-vip', {
+    const response = await axios.get('https://backend.canada-ankara.com/api/admin/guests/employee-vip', {
       params: { search },
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
     });
@@ -136,7 +136,7 @@ const fetchInviters = useCallback(async (search = '') => {
     
     try {
       console.log('PlusOne aranıyor, QR ID:', plusOneQrId);
-      const response = await axios.get('https://backend.canada-ankara.com:5001/api/admin/guests', {
+      const response = await axios.get('https://backend.canada-ankara.com/api/admin/guests', {
         params: { limit: 'all' },
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
@@ -217,7 +217,7 @@ useEffect(() => {
     setModalMessage(newGuest.guestType === 'PLUSONE' ? t('confirmAddPlusOne') : t('confirmAddGuest'));
     setModalAction(() => async () => {
       try {
-        await axios.post('https://backend.canada-ankara.com:5001/api/admin/guests', newGuest, {
+        await axios.post('https://backend.canada-ankara.com/api/admin/guests', newGuest, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
         });
         setNewGuest({ firstName: '', lastName: '', email: '', guestType: 'REGULAR', selectedInviterId: null });
@@ -316,7 +316,7 @@ useEffect(() => {
           guestType: editGuest.guestType,
           selectedInviterId: editGuest.guestType === 'PLUSONE' ? editGuest.selectedInviterId : null,
         };
-        await axios.put(`https://backend.canada-ankara.com:5001/api/admin/guests/${editGuest._id}`, payload, {
+        await axios.put(`https://backend.canada-ankara.com/api/admin/guests/${editGuest._id}`, payload, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
         });
         setEditGuestModalOpen(false);
@@ -339,7 +339,7 @@ useEffect(() => {
     setModalMessage(guest.plusOneQrId && guest.plusOneQrId !== 'NA' ? t('confirmDeleteWithPlusOne') : t('confirmDelete'));
     setModalAction(() => async () => {
       try {
-        await axios.delete(`https://backend.canada-ankara.com:5001/api/admin/guests/${id}`, {
+        await axios.delete(`https://backend.canada-ankara.com/api/admin/guests/${id}`, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
         });
         fetchGuests(currentPage, searchTerm);
@@ -360,7 +360,7 @@ useEffect(() => {
     setModalMessage(guest.willAttend ? t('confirmNotAttend') : t('confirmAttend'));
     setModalAction(() => async () => {
       try {
-        await axios.put(`https://backend.canada-ankara.com:5001/api/admin/guests/${id}/toggle-attend`, {}, {
+        await axios.put(`https://backend.canada-ankara.com/api/admin/guests/${id}/toggle-attend`, {}, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
         });
         setModalOpen(false);
@@ -383,7 +383,7 @@ useEffect(() => {
       try {
         if (plusOneQrId && plusOneQrId !== 'NA') {
           try {
-            const response = await axios.get('https://backend.canada-ankara.com:5001/api/admin/guests', {
+            const response = await axios.get('https://backend.canada-ankara.com/api/admin/guests', {
               params: { limit: 'all' },
               headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
             });
@@ -391,7 +391,7 @@ useEffect(() => {
             const plusOneGuest = response.data.guests.find((g) => g.qrId === plusOneQrId && g.guestType === 'PLUSONE');
 
             if (plusOneGuest) {
-              await axios.delete(`https://backend.canada-ankara.com:5001/api/admin/guests/${plusOneGuest._id}`, {
+              await axios.delete(`https://backend.canada-ankara.com/api/admin/guests/${plusOneGuest._id}`, {
                 headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
               });
               console.log('PlusOne misafir başarıyla silindi:', plusOneGuest._id);
@@ -408,7 +408,7 @@ useEffect(() => {
         }
 
         await axios.put(
-          `https://backend.canada-ankara.com:5001/api/admin/guests/${guestId}`,
+          `https://backend.canada-ankara.com/api/admin/guests/${guestId}`,
           { plusOneQrId: '' },
           { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
         );
@@ -436,7 +436,7 @@ useEffect(() => {
       try {
         await Promise.all(
           selectedGuests.map(async (id) => {
-            await axios.delete(`https://backend.canada-ankara.com:5001/api/admin/guests/${id}`, {
+            await axios.delete(`https://backend.canada-ankara.com/api/admin/guests/${id}`, {
               headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
             });
           })
@@ -491,7 +491,7 @@ const inviterOptions = inviters.map((inviter) => {
     
     try {
       const response = await axios.post(
-        'https://backend.canada-ankara.com:5001/api/admin/mail/send',
+        'https://backend.canada-ankara.com/api/admin/mail/send',
         mailData,
         { 
           headers: { 
@@ -522,7 +522,7 @@ const inviterOptions = inviters.map((inviter) => {
     
     try {
       const response = await axios.post(
-        'https://backend.canada-ankara.com:5001/api/admin/mail/bulk',
+        'https://backend.canada-ankara.com/api/admin/mail/bulk',
         {
           templateType: mailTemplateType,
           customData: {
@@ -565,7 +565,7 @@ const inviterOptions = inviters.map((inviter) => {
     
     try {
       const response = await axios.post(
-        'https://backend.canada-ankara.com:5001/api/admin/mail/send-to-guests',
+        'https://backend.canada-ankara.com/api/admin/mail/send-to-guests',
         {
           guestIds: selectedGuests,
           templateType: mailTemplateType,

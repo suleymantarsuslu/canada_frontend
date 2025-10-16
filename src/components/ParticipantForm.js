@@ -29,7 +29,7 @@ const ParticipantForm = ({ onSuccess, editParticipant }) => {
   useEffect(() => {
     const fetchInviters = async () => {
       try {
-        const response = await axios.get('https://backend.canada-ankara.com:5001/api/admin/guests/employee-vip', {
+        const response = await axios.get('https://backend.canada-ankara.com/api/admin/guests/employee-vip', {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
         });
         setInviters(response.data.inviters);
@@ -66,8 +66,8 @@ const ParticipantForm = ({ onSuccess, editParticipant }) => {
 
     try {
       const url = editParticipant
-        ? `https://backend.canada-ankara.com:5001/api/admin/guests/${editParticipant._id}`
-        : 'https://backend.canada-ankara.com:5001/api/admin/guests';
+        ? `https://backend.canada-ankara.com/api/admin/guests/${editParticipant._id}`
+        : 'https://backend.canada-ankara.com/api/admin/guests';
       const method = editParticipant ? 'put' : 'post';
 
       await axios({

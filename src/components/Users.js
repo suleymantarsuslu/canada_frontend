@@ -25,7 +25,7 @@ const Users = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get('https://backend.canada-ankara.com:5001/api/admin/users', {
+      const response = await axios.get('https://backend.canada-ankara.com/api/admin/users', {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
       setUsers(response.data.users);
@@ -64,8 +64,8 @@ const Users = () => {
 
     try {
       const url = editUser
-        ? `https://backend.canada-ankara.com:5001/api/admin/users/${editUser._id}`
-        : 'https://backend.canada-ankara.com:5001/api/admin/users';
+        ? `https://backend.canada-ankara.com/api/admin/users/${editUser._id}`
+        : 'https://backend.canada-ankara.com/api/admin/users';
       const method = editUser ? 'put' : 'post';
       await axios({
         method,
@@ -97,7 +97,7 @@ const Users = () => {
     setIsConfirmModalOpen(true);
     setConfirmModalAction(() => () => {
       axios
-        .delete(`https://backend.canada-ankara.com:5001/api/admin/users/${id}`, {
+        .delete(`https://backend.canada-ankara.com/api/admin/users/${id}`, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
         })
         .then(() => {

@@ -17,7 +17,7 @@ const Invitation = () => {
   const fetchGuest = async () => {
     try {
       console.log('Fetching guest for qrId:', qrId);
-      const response = await axios.get(`https://backend.canada-ankara.com:5001/api/public/invitation/${qrId}`);
+      const response = await axios.get(`https://backend.canada-ankara.com/api/public/invitation/${qrId}`);
       console.log('Guest response:', response.data);
       setGuest(response.data);
       setError('');
@@ -37,7 +37,7 @@ const Invitation = () => {
     try {
       console.log('Sending RSVP for qrId:', qrId, 'attending:', attending);
       const response = await axios.post(
-        'https://backend.canada-ankara.com:5001/api/public/rsvp',
+        'https://backend.canada-ankara.com/api/public/rsvp',
         {
           qrId,
           attending,
