@@ -7,6 +7,7 @@ import html2canvas from 'html2canvas';
 import styles from './GuestRsvp.module.css';
 import TicketHeader from '../assets/TicketHeader.png';
 import CanadaFlag from '../assets/canada_flag.png';
+import HalloweenGif from '../assets/halloween.gif';
 import G7Image from '../assets/G7.avif';
 import Ticket from './Ticket';
 
@@ -357,7 +358,7 @@ const GuestRsvp = () => {
         <div className={styles.container}>
           <div
             className={styles.containerBackground}
-            style={{ backgroundImage: `url(${CanadaFlag})` }}
+            style={{ backgroundImage: `url(${HalloweenGif})` }}
           ></div>
           <div className={`${styles.halloweenFloat} ${styles.pumpkin1}`}><Pumpkin /></div>
           <div className={`${styles.halloweenFloat} ${styles.ghost1}`}><Ghost /></div>
@@ -433,7 +434,7 @@ const GuestRsvp = () => {
         <div className={styles.container}>
           <div
             className={styles.containerBackground}
-            style={{ backgroundImage: `url(${CanadaFlag})` }}
+            style={{ backgroundImage: `url(${HalloweenGif})` }}
           ></div>
           <div className={`${styles.halloweenFloat} ${styles.pumpkin1}`}><Pumpkin /></div>
           <div className={`${styles.halloweenFloat} ${styles.ghost1}`}><Ghost /></div>
@@ -462,7 +463,7 @@ const GuestRsvp = () => {
       <div className={styles.container}>
         <div
           className={styles.containerBackground}
-          style={{ backgroundImage: `url(${CanadaFlag})` }}
+          style={{ backgroundImage: `url(${HalloweenGif})` }}
         ></div>
         <div className={`${styles.halloweenFloat} ${styles.pumpkin1}`}><Pumpkin /></div>
         <div className={`${styles.halloweenFloat} ${styles.ghost1}`}><Ghost /></div>
@@ -490,7 +491,7 @@ const GuestRsvp = () => {
     // Misafir ekleme formunu göster
     return (
       <div className={styles.container}>
-        <div className={styles.containerBackground} style={{ backgroundImage: `url(${CanadaFlag})` }}></div>
+        <div className={styles.containerBackground} style={{ backgroundImage: `url(${HalloweenGif})` }}></div>
         <div className={`${styles.halloweenFloat} ${styles.pumpkin1}`}><Pumpkin /></div>
         <div className={`${styles.halloweenFloat} ${styles.ghost1}`}><Ghost /></div>
         <div className={`${styles.halloweenFloat} ${styles.bat1}`}><Bat /></div>
@@ -582,7 +583,7 @@ const GuestRsvp = () => {
       <div className={styles.container}>
         <div
           className={styles.containerBackground}
-          style={{ backgroundImage: `url(${CanadaFlag})` }}
+          style={{ backgroundImage: `url(${HalloweenGif})` }}
         ></div>
         <div className={`${styles.halloweenFloat} ${styles.pumpkin1}`}><Pumpkin /></div>
         <div className={`${styles.halloweenFloat} ${styles.ghost1}`}><Ghost /></div>
@@ -666,7 +667,7 @@ const GuestRsvp = () => {
       <div className={styles.container}>
         <div
           className={styles.containerBackground}
-          style={{ backgroundImage: `url(${CanadaFlag})` }}
+          style={{ backgroundImage: `url(${HalloweenGif})` }}
         ></div>
         <div className={`${styles.halloweenFloat} ${styles.pumpkin1}`}><Pumpkin /></div>
         <div className={`${styles.halloweenFloat} ${styles.ghost1}`}><Ghost /></div>
