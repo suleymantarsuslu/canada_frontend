@@ -10,20 +10,68 @@ import CanadaFlag from '../assets/canada_flag.png';
 import G7Image from '../assets/G7.avif';
 import Ticket from './Ticket';
 
-const MapleLeaf = () => (
-  <svg className={styles.mapleLeaf} width="50" height="50" viewBox="0 0 100 100" fill="red">
-    <path d="M12 2l1.5 4.5h4.5l-1.5 3.5 3.5 1-3.5 1.5 1.5 3.5h-4.5l-1.5 4.5-1.5-4.5h-4.5l1.5-3.5-3.5-1 3.5-1.5-1.5-3.5h4.5l1.5-4.5zM12 6l-.75 2.25h-2.25l.75 1.75-1.75.5 1.75.75-.75 1.75h2.25l.75 2.25.75-2.25h2.25l-.75-1.75 1.75-.75-1.75-.5.75-1.75h-2.25l-.75-2.25z" />
+const Pumpkin = () => (
+  <svg className={styles.halloweenElement} width="60" height="60" viewBox="0 0 100 100">
+    <ellipse cx="50" cy="55" rx="35" ry="30" fill="#ff6b35" />
+    <path d="M50 15 Q55 25 50 30" stroke="#2d5016" strokeWidth="3" fill="none" />
+    <rect x="48" y="10" width="4" height="10" fill="#2d5016" rx="2" />
+    <path d="M35 45 L40 50 L35 55 Z" fill="#1a1a1a" />
+    <path d="M65 45 L60 50 L65 55 Z" fill="#1a1a1a" />
+    <path d="M43 65 Q50 70 57 65" stroke="#1a1a1a" strokeWidth="2" fill="none" />
+  </svg>
+);
+
+const Ghost = () => (
+  <svg className={styles.halloweenElement} width="60" height="60" viewBox="0 0 100 100">
+    <path d="M50 10 Q30 10 25 30 Q25 60 25 70 L30 75 L35 70 L40 75 L45 70 L50 75 L55 70 L60 75 L65 70 L70 75 L75 70 Q75 60 75 30 Q70 10 50 10 Z" fill="#f0f0f0" opacity="0.9" />
+    <circle cx="40" cy="35" r="5" fill="#1a1a1a" />
+    <circle cx="60" cy="35" r="5" fill="#1a1a1a" />
+    <ellipse cx="50" cy="50" rx="8" ry="12" fill="#1a1a1a" />
+  </svg>
+);
+
+const Bat = () => (
+  <svg className={styles.halloweenElement} width="70" height="40" viewBox="0 0 140 80">
+    <ellipse cx="70" cy="40" rx="10" ry="12" fill="#2d2d2d" />
+    <path d="M60 40 Q50 25 35 20 Q25 18 20 25 Q18 35 25 40 Q35 45 50 38 Z" fill="#2d2d2d" />
+    <path d="M80 40 Q90 25 105 20 Q115 18 120 25 Q122 35 115 40 Q105 45 90 38 Z" fill="#2d2d2d" />
+    <circle cx="67" cy="38" r="2" fill="#ff0000" />
+    <circle cx="73" cy="38" r="2" fill="#ff0000" />
+  </svg>
+);
+
+const Spider = () => (
+  <svg className={styles.halloweenElement} width="50" height="50" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="12" fill="#1a1a1a" />
+    <circle cx="50" cy="35" r="8" fill="#1a1a1a" />
+    <line x1="50" y1="50" x2="20" y2="30" stroke="#1a1a1a" strokeWidth="2" />
+    <line x1="50" y1="50" x2="20" y2="50" stroke="#1a1a1a" strokeWidth="2" />
+    <line x1="50" y1="50" x2="20" y2="70" stroke="#1a1a1a" strokeWidth="2" />
+    <line x1="50" y1="50" x2="80" y2="30" stroke="#1a1a1a" strokeWidth="2" />
+    <line x1="50" y1="50" x2="80" y2="50" stroke="#1a1a1a" strokeWidth="2" />
+    <line x1="50" y1="50" x2="80" y2="70" stroke="#1a1a1a" strokeWidth="2" />
+  </svg>
+);
+
+const Candy = () => (
+  <svg className={styles.halloweenElement} width="50" height="50" viewBox="0 0 100 100">
+    <rect x="30" y="40" width="40" height="20" fill="#ff1744" rx="3" />
+    <rect x="30" y="40" width="8" height="20" fill="#ffeb3b" />
+    <rect x="46" y="40" width="8" height="20" fill="#ffeb3b" />
+    <rect x="62" y="40" width="8" height="20" fill="#ffeb3b" />
+    <path d="M25 45 L30 40 L30 60 L25 55 Z" fill="#4caf50" />
+    <path d="M75 45 L70 40 L70 60 L75 55 Z" fill="#4caf50" />
   </svg>
 );
 
 const CalendarIcon = () => (
-  <svg className={styles.icon} viewBox="0 0 24 24" fill="#dc2626">
+  <svg className={styles.icon} viewBox="0 0 24 24" fill="#ff6b35">
     <path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zM5 8V6h14v2H5z" />
   </svg>
 );
 
 const LocationIcon = () => (
-  <svg className={styles.icon} viewBox="0 0 24 24" fill="#dc2626">
+  <svg className={styles.icon} viewBox="0 0 24 24" fill="#ff6b35">
     <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z" />
   </svg>
 );
@@ -311,12 +359,14 @@ const GuestRsvp = () => {
             className={styles.containerBackground}
             style={{ backgroundImage: `url(${CanadaFlag})` }}
           ></div>
-          <div className={`${styles.mapleLeaf} top-10 left-20`}><MapleLeaf /></div>
-          <div className={`${styles.mapleLeaf} bottom-20 right-30`}><MapleLeaf /></div>
-          <div className={`${styles.mapleLeaf} top-40 right-10`}><MapleLeaf /></div>
-          <div className={`${styles.mapleLeaf} bottom-10 left-30`}><MapleLeaf /></div>
-          <div className={`${styles.mapleLeaf} top-20 right-60`}><MapleLeaf /></div>
-          <div className={`${styles.mapleLeaf} bottom-40 left-60`}><MapleLeaf /></div>
+          <div className={`${styles.halloweenFloat} ${styles.pumpkin1}`}><Pumpkin /></div>
+          <div className={`${styles.halloweenFloat} ${styles.ghost1}`}><Ghost /></div>
+          <div className={`${styles.halloweenFloat} ${styles.bat1}`}><Bat /></div>
+          <div className={`${styles.halloweenFloat} ${styles.spider1}`}><Spider /></div>
+          <div className={`${styles.halloweenFloat} ${styles.candy1}`}><Candy /></div>
+          <div className={`${styles.halloweenFloat} ${styles.pumpkin2}`}><Pumpkin /></div>
+          <div className={`${styles.halloweenFloat} ${styles.ghost2}`}><Ghost /></div>
+          <div className={`${styles.halloweenFloat} ${styles.bat2}`}><Bat /></div>
           <div className={styles.content}>
             <h1 className={styles.h1}>{t('eventTitle')}</h1>
             <p className={`${styles.textXl} font-sans`}>
@@ -388,12 +438,14 @@ const GuestRsvp = () => {
             className={styles.containerBackground}
             style={{ backgroundImage: `url(${CanadaFlag})` }}
           ></div>
-          <div className={`${styles.mapleLeaf} top-10 left-20`}><MapleLeaf /></div>
-          <div className={`${styles.mapleLeaf} bottom-20 right-30`}><MapleLeaf /></div>
-          <div className={`${styles.mapleLeaf} top-40 right-10`}><MapleLeaf /></div>
-          <div className={`${styles.mapleLeaf} bottom-10 left-30`}><MapleLeaf /></div>
-          <div className={`${styles.mapleLeaf} top-20 right-60`}><MapleLeaf /></div>
-          <div className={`${styles.mapleLeaf} bottom-40 left-60`}><MapleLeaf /></div>
+          <div className={`${styles.halloweenFloat} ${styles.pumpkin1}`}><Pumpkin /></div>
+          <div className={`${styles.halloweenFloat} ${styles.ghost1}`}><Ghost /></div>
+          <div className={`${styles.halloweenFloat} ${styles.bat1}`}><Bat /></div>
+          <div className={`${styles.halloweenFloat} ${styles.spider1}`}><Spider /></div>
+          <div className={`${styles.halloweenFloat} ${styles.candy1}`}><Candy /></div>
+          <div className={`${styles.halloweenFloat} ${styles.pumpkin2}`}><Pumpkin /></div>
+          <div className={`${styles.halloweenFloat} ${styles.ghost2}`}><Ghost /></div>
+          <div className={`${styles.halloweenFloat} ${styles.bat2}`}><Bat /></div>
           <div className={styles.content}>
             <h1 className={styles.h1}>{t('eventTitle')}</h1>
             <p className={`${styles.textXl} font-sans`}>
