@@ -413,12 +413,6 @@ const GuestRsvp = () => {
               </div>
             ))}
           </div>
-            <p className={`${styles.textSm} mt-6`}>
-              {t('registrationOpen')}
-            </p>
-            <p className={styles.textSm}>
-              {t('spaceLimited')}
-            </p>
             <p className={styles.textSm}>
               {t('noParking')}
             </p>
@@ -644,12 +638,6 @@ const GuestRsvp = () => {
               {t('addGuest') || 'Misafir Ekle'}
             </button>
           )}
-          <p className={`${styles.textSm} mt-6`}>
-            {t('registrationOpen')}
-          </p>
-          <p className={styles.textSm}>
-            {t('spaceLimited')}
-          </p>
           <p className={styles.textSm}>
             {t('noParking')}
           </p>
@@ -705,19 +693,7 @@ const GuestRsvp = () => {
             Aziziye, Cinnah Street no: 58, 06690 Çankaya/Ankara
           </p>
           <p className={styles.textLg}>
-            {t('rsvpEmail') || 'RSVP'}: <a href="mailto:ankara.rsvp@international.gc.ca" className={styles.textRed600}>ankara.rsvp@international.gc.ca</a>
-          </p>
-          <p className={styles.textSm}>
-            {t('doNotShareLink')}
-          </p>
-          <p className={styles.textSm}>
-            {t('upTo6GuestsInfo')}
-          </p>
-          <p className={styles.textSm}>
-            {t('registrationOpen')}
-          </p>
-          <p className={styles.textSm}>
-            {t('spaceLimited')}
+            {t('rsvpEmail') || 'RSVP'}: <a href="mailto:canadaclub.ankara@international.gc.ca" className={styles.textRed600}>canadaclub.ankara@international.gc.ca</a>
           </p>
           <p className={styles.textSm}>
             {t('noParking')}
