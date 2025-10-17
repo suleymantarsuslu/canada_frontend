@@ -527,7 +527,7 @@ const inviterOptions = inviters.map((inviter) => {
           templateType: mailTemplateType,
           customData: {
             eventDate: '18 Temmuz 2025',
-            eventTime: '19:00',
+            eventTime: '18:00 - 22:00',
             eventLocation: 'Canada Club Ankara'
           },
           filters: mailFilters
@@ -571,7 +571,7 @@ const inviterOptions = inviters.map((inviter) => {
           templateType: mailTemplateType,
           customData: {
             eventDate: '18 Temmuz 2025',
-            eventTime: '19:00',
+            eventTime: '18:00 - 22:00',
             eventLocation: 'Canada Club Ankara'
           }
         },
@@ -602,7 +602,7 @@ const inviterOptions = inviters.map((inviter) => {
     setMailData({
       to: '',
       subject: 'G7 Canada Club Event - Davet',
-      message: 'Sayın [Ad Soyad],\n\nG7 Canada Club Event\'ine davet edildiğinizi bildirmekten mutluluk duyarız.\n\nEtkinlik Detayları:\n- Tarih: 18 Temmuz 2025\n- Saat: 19:00\n- Konum: Canada Club Ankara\n- Adres: Aziziye, Cinnah Street no: 58, 06690 Çankaya/Ankara\n\nSaygılarımızla,\nCanada Club Ankara'
+      message: 'Sayın [Ad Soyad],\n\nG7 Canada Club Event\'ine davet edildiğinizi bildirmekten mutluluk duyarız.\n\nEtkinlik Detayları:\n- Tarih: 18 Temmuz 2025\n- Saat: 18:00 - 22:00\n- Konum: Canada Club Ankara\n- Adres: Aziziye, Cinnah Street no: 58, 06690 Çankaya/Ankara\n\nSaygılarımızla,\nCanada Club Ankara'
     });
     setShowMailModal(true);
   };

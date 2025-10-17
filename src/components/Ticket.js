@@ -56,7 +56,7 @@ const Ticket = ({ guest, qrId, isPlusOne = false, plusOneGuest }) => {
           {t('eventDate') || 'Friday July 18th, 2025'}
         </p>
         <p className={styles.textLg}>
-          {t('eventTime') || '17:00 - 22:00'}
+          {t('eventTime') || '18:00 - 22:00'}
         </p>
         <p className={styles.textLg}>
           <LocationIcon />
