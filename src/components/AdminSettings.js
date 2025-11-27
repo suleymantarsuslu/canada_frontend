@@ -14,7 +14,14 @@ const AdminSettings = () => {
   const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
   const [isGuestTypeSettingsModalOpen, setIsGuestTypeSettingsModalOpen] = useState(false);
   const [isVolunteerSettingsModalOpen, setIsVolunteerSettingsModalOpen] = useState(false);
+  const [isEventInformationModalOpen, setIsEventInformationModalOpen] = useState(false);
   const [volunteers, setVolunteers] = useState([]);
+  const [eventInformation, setEventInformation] = useState({
+    eventName: '',
+    eventDate: '',
+    eventTime: '',
+    eventLocation: ''
+  });
   const [confirmModalAction, setConfirmModalAction] = useState(() => {});
   const [error, setError] = useState('');
   const [rsvpEnabled, setRsvpEnabled] = useState(true);
@@ -121,6 +128,7 @@ const AdminSettings = () => {
     checkVolunteerSystemStatus();
     loadGuestTypeSettings();
     loadVolunteerSettings();
+    loadEventInformation();
   }, [t]);
 
   const checkVolunteerSystemStatus = async () => {
@@ -172,6 +180,36 @@ const AdminSettings = () => {
       console.error('Volunteer ayarları alma hatası:', error);
       // Hata durumunda boş array kullan
       setVolunteers([]);
+    }
+  };
+
+  const loadEventInformation = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      return;
+    }
+
+    try {
+      const response = await axios.get('https://backend.canada-ankara.com/api/admin/event-information', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      console.log('Event information alındı:', response.data);
+      setEventInformation({
+        eventName: response.data.eventName || '',
+        eventDate: response.data.eventDate || '',
+        eventTime: response.data.eventTime || '',
+        eventLocation: response.data.eventLocation || ''
+      });
+      setError('');
+    } catch (error) {
+      console.error('Event information alma hatası:', error);
+      // Hata durumunda boş değerler kullan
+      setEventInformation({
+        eventName: '',
+        eventDate: '',
+        eventTime: '',
+        eventLocation: ''
+      });
     }
   };
 
@@ -606,6 +644,84 @@ const AdminSettings = () => {
     setIsGuestTypeSettingsModalOpen(true);
   };
 
+  const handleEventInformationClick = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setError(`${t('error')}: ${t('noAuthToken')}`);
+      setIsErrorModalOpen(true);
+      return;
+    }
+
+    try {
+      const response = await axios.get('https://backend.canada-ankara.com/api/admin/event-information', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setEventInformation({
+        eventName: response.data.eventName || '',
+        eventDate: response.data.eventDate || '',
+        eventTime: response.data.eventTime || '',
+        eventLocation: response.data.eventLocation || ''
+      });
+      setIsEventInformationModalOpen(true);
+    } catch (error) {
+      console.error('Event information alma hatası:', error);
+      setIsEventInformationModalOpen(true);
+    }
+  };
+
+  const handleEventInformationSave = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setError(`${t('error')}: ${t('noAuthToken')}`);
+      setIsErrorModalOpen(true);
+      return;
+    }
+
+    // Doğrulama
+    if (!eventInformation.eventName || !eventInformation.eventDate || !eventInformation.eventTime || !eventInformation.eventLocation) {
+      alert(t('fillAllFields') || 'Lütfen tüm alanları doldurun');
+      return;
+    }
+
+    try {
+      const response = await axios.post(
+        'https://backend.canada-ankara.com/api/admin/event-information',
+        eventInformation,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Accept-Language': t('i18n.language'),
+          },
+        }
+      );
+      console.log('Event information kaydedildi:', response.data);
+      setIsEventInformationModalOpen(false);
+      alert(t('eventInformationSaved') || 'Event bilgileri başarıyla kaydedildi');
+      setError('');
+    } catch (error) {
+      console.error('Event information kaydetme hatası:', error);
+      let errorMessage = t('eventInformationSaveFailed') || 'Event bilgileri kaydedilemedi';
+      if (error.response) {
+        if (error.response.status === 401) {
+          errorMessage = t('unauthorizedError');
+        } else if (error.response.status === 500) {
+          errorMessage = error.response.data.message || t('serverError');
+        }
+      } else if (error.request) {
+        errorMessage = t('networkError');
+      }
+      setError(`${t('error')}: ${errorMessage}`);
+      setIsErrorModalOpen(true);
+    }
+  };
+
+  const handleEventInformationChange = (field, value) => {
+    setEventInformation(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
   const handleVolunteerSettingsClick = async () => {
     const token = localStorage.getItem('token');
     if (!token) {
@@ -881,6 +997,12 @@ const AdminSettings = () => {
                     </label>
                   </div>
                 </div>
+                <button
+                  onClick={handleEventInformationClick}
+                  className="btn btn-canada mb-3"
+                >
+                  {t('eventInformationSettings') || 'Event Information Settings'}
+                </button>
                 <button
                   onClick={handleGuestTypeSettingsClick}
                   className="btn btn-canada mb-3"
@@ -1261,6 +1383,82 @@ const AdminSettings = () => {
                   type="button"
                   className="btn btn-canada"
                   onClick={handleGuestTypeSettingsSave}
+                >
+                  {t('save') || 'Kaydet'}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {isEventInformationModalOpen && (
+        <div className="modal fade show d-block" tabIndex="-1" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">{t('eventInformationSettings') || 'Event Information Settings'}</h5>
+                <button
+                  type="button"
+                  className="btn-close"
+                  onClick={() => setIsEventInformationModalOpen(false)}
+                ></button>
+              </div>
+              <div className="modal-body">
+                <p className="mb-3">{t('eventInformationSettingsDescription') || 'Etkinlik bilgilerini girin:'}</p>
+                <div className="mb-3">
+                  <label className="form-label">{t('eventName') || 'Etkinlik Adı'}</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={eventInformation.eventName}
+                    onChange={(e) => handleEventInformationChange('eventName', e.target.value)}
+                    placeholder={t('eventNamePlaceholder') || 'Örn: Canada Club\'s HALLOWEEN PARTY'}
+                  />
+                </div>
+                <div className="mb-3">
+                  <label className="form-label">{t('eventDate') || 'Etkinlik Tarihi'}</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={eventInformation.eventDate}
+                    onChange={(e) => handleEventInformationChange('eventDate', e.target.value)}
+                    placeholder={t('eventDatePlaceholder') || 'Örn: Friday October 31, 2025'}
+                  />
+                </div>
+                <div className="mb-3">
+                  <label className="form-label">{t('eventTime') || 'Etkinlik Saati'}</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={eventInformation.eventTime}
+                    onChange={(e) => handleEventInformationChange('eventTime', e.target.value)}
+                    placeholder={t('eventTimePlaceholder') || 'Örn: 18:00 - 22:00'}
+                  />
+                </div>
+                <div className="mb-3">
+                  <label className="form-label">{t('eventLocation') || 'Etkinlik Yeri'}</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={eventInformation.eventLocation}
+                    onChange={(e) => handleEventInformationChange('eventLocation', e.target.value)}
+                    placeholder={t('eventLocationPlaceholder') || 'Örn: At the Canadian Embassy in Ankara'}
+                  />
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-canada-secondary"
+                  onClick={() => setIsEventInformationModalOpen(false)}
+                >
+                  {t('cancel') || 'İptal'}
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-canada"
+                  onClick={handleEventInformationSave}
                 >
                   {t('save') || 'Kaydet'}
                 </button>

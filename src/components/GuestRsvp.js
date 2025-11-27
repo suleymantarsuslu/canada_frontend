@@ -44,6 +44,12 @@ const GuestRsvp = () => {
   const [showDeclineMessage, setShowDeclineMessage] = useState(false);
   const [guestData, setGuestData] = useState({ firstName: '', lastName: '', email: '' });
   const [maxGuests, setMaxGuests] = useState(0);
+  const [eventInfo, setEventInfo] = useState({
+    eventName: '',
+    eventDate: '',
+    eventTime: '',
+    eventLocation: ''
+  });
 
   const API_URL = 'https://backend.canada-ankara.com';
 
@@ -84,8 +90,31 @@ const GuestRsvp = () => {
       }
     };
 
+    const fetchEventInformation = async () => {
+      try {
+        const response = await axios.get(`${API_URL}/api/public/event-information`);
+        console.log('Event bilgileri alındı:', response.data);
+        setEventInfo({
+          eventName: response.data.eventName || '',
+          eventDate: response.data.eventDate || '',
+          eventTime: response.data.eventTime || '',
+          eventLocation: response.data.eventLocation || ''
+        });
+      } catch (err) {
+        console.error('Event bilgileri alma hatası:', err.response?.data || err.message);
+        // Hata durumunda translation key'lerini kullan
+        setEventInfo({
+          eventName: '',
+          eventDate: '',
+          eventTime: '',
+          eventLocation: ''
+        });
+      }
+    };
+
     checkRsvpStatus();
     fetchGuest();
+    fetchEventInformation();
   }, [qrId, t, navigate]);
 
   useEffect(() => {
@@ -205,6 +234,7 @@ const GuestRsvp = () => {
           guest={guestData}
           qrId={qrId}
           isPlusOne={isPlusOne}
+          eventInfo={eventInfo}
         />
       );
 
@@ -311,7 +341,7 @@ const GuestRsvp = () => {
             }}
           ></div>
           <div className={styles.content}>
-            <h1 className={styles.h1}>{t('eventTitle')}</h1>
+            <h1 className={styles.h1}>{eventInfo.eventName || t('eventTitle')}</h1>
             <p className={`${styles.textXl} font-sans`}>
               {t('dear')} {guest.firstName} {guest.lastName}
             </p>
@@ -323,14 +353,14 @@ const GuestRsvp = () => {
             </p>
             <p className={styles.textXl}>
               <CalendarIcon />
-              {t('eventDate')}
+              {eventInfo.eventDate || t('eventDate')}
             </p>
             <p className={styles.textLg}>
-              {t('eventTime')}
+              {eventInfo.eventTime || t('eventTime')}
             </p>
             <p className={styles.textLg}>
               <LocationIcon />
-              {t('eventLocation')}
+              {eventInfo.eventLocation || t('eventLocation')}
             </p>
             <p className={styles.textSm}>
               Aziziye, Cinnah Street no: 58, 06690 Çankaya/Ankara
@@ -380,11 +410,11 @@ const GuestRsvp = () => {
               backgroundPosition: 'center'
             }}
           ></div>
-          <div className={styles.content}>
-            <h1 className={styles.h1}>{t('eventTitle')}</h1>
-            <p className={`${styles.textXl} font-sans`}>
-              {t('rsvpClosedMessage') || 'Üzgünüz fakat kayıtlarımız sona ermiştir. Talep ve sorularınız için canadaclub.ankara@international.gc.ca ile iletişime geçebilirsiniz.'}
-            </p>
+        <div className={styles.content}>
+          <h1 className={styles.h1}>{eventInfo.eventName || t('eventTitle')}</h1>
+          <p className={`${styles.textXl} font-sans`}>
+            {t('rsvpClosedMessage') || 'Üzgünüz fakat kayıtlarımız sona ermiştir. Talep ve sorularınız için canadaclub.ankara@international.gc.ca ile iletişime geçebilirsiniz.'}
+          </p>
             <p className={styles.textLg}>
               <a href="mailto:canadaclub.ankara@international.gc.ca" className={styles.textRed600}>canadaclub.ankara@international.gc.ca</a>
             </p>
@@ -402,7 +432,7 @@ const GuestRsvp = () => {
           style={{ backgroundImage: `url(${CanadaFlag})` }}
         ></div>
         <div className={styles.content}>
-          <h1 className={styles.h1}>{t('eventTitle')}</h1>
+          <h1 className={styles.h1}>{eventInfo.eventName || t('eventTitle')}</h1>
           <p className={`${styles.textXl} font-sans`}>
             {t('declineMessage') || 'Sizleri aramızda göremeyeceğimiz için üzgünüz.'}
           </p>
@@ -426,7 +456,7 @@ const GuestRsvp = () => {
           backgroundPosition: 'center'
         }}></div>
         <div className={styles.content}>
-          <h1 className={styles.h1}>{t('eventTitle')}</h1>
+          <h1 className={styles.h1}>{eventInfo.eventName || t('eventTitle')}</h1>
           <p className={`${styles.textXl} font-sans`}>
             {t('dear')} {guest.firstName} {guest.lastName}
           </p>
@@ -581,7 +611,7 @@ const GuestRsvp = () => {
           style={{ backgroundImage: `url(${CanadaFlag})` }}
         ></div>
         <div className={styles.content}>
-          <h1 className={styles.h1}>{t('eventTitle')}</h1>
+          <h1 className={styles.h1}>{eventInfo.eventName || t('eventTitle')}</h1>
           <p className={`${styles.textXl} font-sans`}>
             {t('dear')} {guest.firstName} {guest.lastName}
           </p>
@@ -593,14 +623,14 @@ const GuestRsvp = () => {
           </p>
           <p className={styles.textXl}>
             <CalendarIcon />
-            {t('eventDate')}
+            {eventInfo.eventDate || t('eventDate')}
           </p>
           <p className={styles.textLg}>
-            {t('eventTime')}
+            {eventInfo.eventTime || t('eventTime')}
           </p>
           <p className={styles.textLg}>
             <LocationIcon />
-            {t('eventLocation')}
+            {eventInfo.eventLocation || t('eventLocation')}
           </p>
           <p className={styles.textSm}>
             Aziziye, Cinnah Street no: 58, 06690 Çankaya/Ankara

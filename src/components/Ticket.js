@@ -24,7 +24,7 @@ const LocationIcon = () => (
   </svg>
 );
 
-const Ticket = ({ guest, qrId, isPlusOne = false, plusOneGuest }) => {
+const Ticket = ({ guest, qrId, isPlusOne = false, plusOneGuest, eventInfo = null }) => {
   const { t } = useTranslation();
 
   return (
@@ -36,7 +36,7 @@ const Ticket = ({ guest, qrId, isPlusOne = false, plusOneGuest }) => {
       <div className={styles.mapleLeaf} style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}><MapleLeaf /></div>
       <div className={styles.content}>
         <img src={TicketHeader} alt="Ticket Header" className={styles.ticketHeader} />
-        <h1 className={styles.h1}>{t('eventTitle') || 'Canada Club\'s Summer BBQ 2025'}</h1>
+        <h1 className={styles.h1}>{eventInfo?.eventName || t('eventTitle') || 'Canada Club\'s Summer BBQ 2025'}</h1>
         <p className={`${styles.textXl} font-sans`}>
           {t('dear') || 'Dear'} {guest.firstName} {guest.lastName}
         </p>
@@ -48,14 +48,14 @@ const Ticket = ({ guest, qrId, isPlusOne = false, plusOneGuest }) => {
         </p>
         <p className={styles.textXl}>
           <CalendarIcon />
-          {t('eventDate') || 'Friday July 18th, 2025'}
+          {eventInfo?.eventDate || t('eventDate') || 'Friday July 18th, 2025'}
         </p>
         <p className={styles.textLg}>
-          {t('eventTime') || '18:00 - 22:00'}
+          {eventInfo?.eventTime || t('eventTime') || '18:00 - 22:00'}
         </p>
         <p className={styles.textLg}>
           <LocationIcon />
-          {t('eventLocation') || 'At the Canadian Embassy in Ankara'}
+          {eventInfo?.eventLocation || t('eventLocation') || 'At the Canadian Embassy in Ankara'}
         </p>
         <p className={styles.textSm}>
           Aziziye, Cinnah Street no: 58, 06690 Çankaya/Ankara
