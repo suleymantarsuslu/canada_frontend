@@ -1407,7 +1407,7 @@ const AdminSettings = () => {
               <div className="modal-body">
                 <p className="mb-3">{t('eventInformationSettingsDescription') || 'Etkinlik bilgilerini girin:'}</p>
                 <div className="mb-3">
-                  <label className="form-label">{t('eventName') || 'Etkinlik Adı'}</label>
+                  <label className="form-label">{t('eventNameLabel') || 'Event Name'}</label>
                   <input
                     type="text"
                     className="form-control"
@@ -1417,7 +1417,7 @@ const AdminSettings = () => {
                   />
                 </div>
                 <div className="mb-3">
-                  <label className="form-label">{t('eventDate') || 'Etkinlik Tarihi'}</label>
+                  <label className="form-label">{t('eventDateLabel') || 'Event Date'}</label>
                   <input
                     type="text"
                     className="form-control"
@@ -1427,7 +1427,7 @@ const AdminSettings = () => {
                   />
                 </div>
                 <div className="mb-3">
-                  <label className="form-label">{t('eventTime') || 'Etkinlik Saati'}</label>
+                  <label className="form-label">{t('eventTimeLabel') || 'Event Time'}</label>
                   <input
                     type="text"
                     className="form-control"
@@ -1437,7 +1437,7 @@ const AdminSettings = () => {
                   />
                 </div>
                 <div className="mb-3">
-                  <label className="form-label">{t('eventLocation') || 'Etkinlik Yeri'}</label>
+                  <label className="form-label">{t('eventLocationLabel') || 'Event Location'}</label>
                   <input
                     type="text"
                     className="form-control"
