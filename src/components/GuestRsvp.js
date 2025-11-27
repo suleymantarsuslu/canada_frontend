@@ -303,7 +303,12 @@ const GuestRsvp = () => {
         <div className={styles.container}>
           <div
             className={styles.containerBackground}
-            style={{ backgroundImage: `url(${CanadaFlag})` }}
+            style={{ 
+              backgroundImage: `url(${CanadaFlag})`,
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: 'contain',
+              backgroundPosition: 'center'
+            }}
           ></div>
           <div className={styles.content}>
             <h1 className={styles.h1}>{t('eventTitle')}</h1>
@@ -368,7 +373,12 @@ const GuestRsvp = () => {
         <div className={styles.container}>
           <div
             className={styles.containerBackground}
-            style={{ backgroundImage: `url(${CanadaFlag})` }}
+            style={{ 
+              backgroundImage: `url(${CanadaFlag})`,
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: 'contain',
+              backgroundPosition: 'center'
+            }}
           ></div>
           <div className={styles.content}>
             <h1 className={styles.h1}>{t('eventTitle')}</h1>
@@ -409,7 +419,12 @@ const GuestRsvp = () => {
     // Misafir ekleme formunu göster
     return (
       <div className={styles.container}>
-        <div className={styles.containerBackground} style={{ backgroundImage: `url(${CanadaFlag})` }}></div>
+        <div className={styles.containerBackground} style={{ 
+          backgroundImage: `url(${CanadaFlag})`,
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'contain',
+          backgroundPosition: 'center'
+        }}></div>
         <div className={styles.content}>
           <h1 className={styles.h1}>{t('eventTitle')}</h1>
           <p className={`${styles.textXl} font-sans`}>
