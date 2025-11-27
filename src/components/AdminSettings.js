@@ -19,6 +19,7 @@ const AdminSettings = () => {
   const [error, setError] = useState('');
   const [rsvpEnabled, setRsvpEnabled] = useState(true);
   const [telegramEnabled, setTelegramEnabled] = useState(true);
+  const [volunteerSystemEnabled, setVolunteerSystemEnabled] = useState(false);
   const [failedRows, setFailedRows] = useState([]);
   const [isErrorTableOpen, setIsErrorTableOpen] = useState(false);
   const [errorHeaders, setErrorHeaders] = useState([]);
@@ -117,9 +118,42 @@ const AdminSettings = () => {
 
     checkRsvpStatus();
     checkTelegramStatus();
+    checkVolunteerSystemStatus();
     loadGuestTypeSettings();
     loadVolunteerSettings();
   }, [t]);
+
+  const checkVolunteerSystemStatus = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setError(`${t('error')}: ${t('noAuthToken')}`);
+      setIsErrorModalOpen(true);
+      return;
+    }
+
+    try {
+      const response = await axios.get('https://backend.canada-ankara.com/api/admin/volunteer-system-status', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      console.log('Volunteer system durumu alındı:', response.data);
+      setVolunteerSystemEnabled(response.data.volunteerSystemEnabled);
+      setError('');
+    } catch (error) {
+      console.error('Volunteer system durumu alma hatası:', error);
+      let errorMessage = t('volunteerSystemStatusFetchFailed') || 'Volunteer system durumu alınamadı';
+      if (error.response) {
+        if (error.response.status === 401) {
+          errorMessage = t('unauthorizedError');
+        } else if (error.response.status === 500) {
+          errorMessage = error.response.data.message || t('serverError');
+        }
+      } else if (error.request) {
+        errorMessage = t('networkError');
+      }
+      setError(`${t('error')}: ${errorMessage}`);
+      setIsErrorModalOpen(true);
+    }
+  };
 
   const loadVolunteerSettings = async () => {
     const token = localStorage.getItem('token');
@@ -355,6 +389,48 @@ const AdminSettings = () => {
     } catch (error) {
       console.error('Telegram durumu değiştirme hatası:', error);
       let errorMessage = t('telegramToggleFailed');
+      if (error.response) {
+        if (error.response.status === 401) {
+          errorMessage = t('unauthorizedError');
+        } else if (error.response.status === 404) {
+          errorMessage = t('endpointNotFound');
+        } else if (error.response.status === 500) {
+          errorMessage = error.response.data.message || t('serverError');
+        }
+      } else if (error.request) {
+        errorMessage = t('networkError');
+      }
+      setError(`${t('error')}: ${errorMessage}`);
+      setIsErrorModalOpen(true);
+    }
+  };
+
+  const handleToggleVolunteerSystem = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setError(`${t('error')}: ${t('noAuthToken')}`);
+      setIsErrorModalOpen(true);
+      return;
+    }
+
+    try {
+      const response = await axios.post(
+        'https://backend.canada-ankara.com/api/admin/toggle-volunteer-system',
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Accept-Language': t('i18n.language'),
+          },
+        }
+      );
+      setVolunteerSystemEnabled(response.data.volunteerSystemEnabled);
+      setError('');
+      alert(t('volunteerSystemToggled', { status: response.data.volunteerSystemEnabled ? t('enabled') : t('disabled') }) || 
+            `Volunteer System ${response.data.volunteerSystemEnabled ? 'açıldı' : 'kapatıldı'}`);
+    } catch (error) {
+      console.error('Volunteer system durumu değiştirme hatası:', error);
+      let errorMessage = t('volunteerSystemToggleFailed') || 'Volunteer system durumu değiştirilemedi';
       if (error.response) {
         if (error.response.status === 401) {
           errorMessage = t('unauthorizedError');
@@ -787,6 +863,21 @@ const AdminSettings = () => {
                     />
                     <label className="form-check-label" htmlFor="telegramToggle">
                       {telegramEnabled ? t('telegramEnabled') : t('telegramDisabled')}
+                    </label>
+                  </div>
+                </div>
+                <div className="mb-3 d-flex align-items-center form-check-label">
+                  <h5 className="me-3 col-md-6">{t('toggleVolunteerSystem') || 'Volunteer System'}</h5>
+                  <div className="form-check form-switch">
+                    <input
+                      type="checkbox"
+                      className="form-check-input col-md-6"
+                      id="volunteerSystemToggle"
+                      checked={volunteerSystemEnabled}
+                      onChange={handleToggleVolunteerSystem}
+                    />
+                    <label className="form-check-label" htmlFor="volunteerSystemToggle">
+                      {volunteerSystemEnabled ? (t('enabled') || 'Açık') : (t('disabled') || 'Kapalı')}
                     </label>
                   </div>
                 </div>
