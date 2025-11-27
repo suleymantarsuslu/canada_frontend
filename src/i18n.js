@@ -374,6 +374,9 @@ const resources = {
       eventInformationFetchFailed: 'Etkinlik bilgileri alınamadı',
       invalidEventInformation: 'Tüm alanlar doldurulmalıdır',
       fillAllFields: 'Lütfen tüm alanları doldurun',
+      wouldYouLikeToVolunteer: 'Gönüllü olmak ister misiniz?',
+      yes: 'Evet',
+      no: 'Hayır',
     },
   },
   en: {
@@ -739,6 +742,9 @@ const resources = {
       eventInformationFetchFailed: 'Failed to fetch event information',
       invalidEventInformation: 'All fields must be filled',
       fillAllFields: 'Please fill in all fields',
+      wouldYouLikeToVolunteer: 'Would you like to volunteer?',
+      yes: 'Yes',
+      no: 'No',
     },
   },
   fr: {
@@ -1105,6 +1111,9 @@ const resources = {
     eventInformationFetchFailed: 'Échec de la récupération des informations sur l\'événement',
     invalidEventInformation: 'Tous les champs doivent être remplis',
     fillAllFields: 'Veuillez remplir tous les champs',
+    wouldYouLikeToVolunteer: 'Souhaitez-vous être bénévole?',
+    yes: 'Oui',
+    no: 'Non',
     },
   },
 };

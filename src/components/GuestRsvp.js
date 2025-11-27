@@ -38,6 +38,10 @@ const GuestRsvp = () => {
   const [guest, setGuest] = useState(null);
   const [guests, setGuests] = useState([]);
   const [rsvpEnabled, setRsvpEnabled] = useState(true);
+  const [volunteerSystemEnabled, setVolunteerSystemEnabled] = useState(false);
+  const [volunteers, setVolunteers] = useState([]);
+  const [selectedVolunteerFields, setSelectedVolunteerFields] = useState([]);
+  const [showVolunteerForm, setShowVolunteerForm] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [showGuestForm, setShowGuestForm] = useState(false);
@@ -115,20 +119,40 @@ const GuestRsvp = () => {
       }
     };
 
+    const fetchVolunteerSystemStatus = async () => {
+      try {
+        const response = await axios.get(`${API_URL}/api/public/volunteer-system-status`);
+        console.log('Volunteer system durumu alındı:', response.data);
+        setVolunteerSystemEnabled(response.data.volunteerSystemEnabled || false);
+        setVolunteers(response.data.volunteers || []);
+      } catch (err) {
+        console.error('Volunteer system durumu alma hatası:', err.response?.data || err.message);
+        setVolunteerSystemEnabled(false);
+        setVolunteers([]);
+      }
+    };
+
     checkRsvpStatus();
     fetchGuest();
     fetchEventInformation();
+    fetchVolunteerSystemStatus();
   }, [qrId, t, navigate]);
 
   useEffect(() => {
     if (guest && guest.willAttend && rsvpEnabled) {
-      if (['EMPLOYEE', 'VIP'].includes(guest.guestType) && (!guest.guests || guest.guests.length < maxGuests)) {
+      // Volunteer system aktifse ve guest'in volunteer bilgisi null ise volunteer formunu göster
+      if (volunteerSystemEnabled && guest.volunteer === null) {
+        setShowVolunteerForm(true);
+        setShowGuestForm(false);
+      } else if (['EMPLOYEE', 'VIP'].includes(guest.guestType) && (!guest.guests || guest.guests.length < maxGuests)) {
         setShowGuestForm(true);
+        setShowVolunteerForm(false);
       } else {
         setShowGuestForm(false);
+        setShowVolunteerForm(false);
       }
     }
-  }, [guest, rsvpEnabled, maxGuests]);
+  }, [guest, rsvpEnabled, maxGuests, volunteerSystemEnabled]);
 
   const handleResponse = async (willAttend) => {
     console.log('handleResponse çağrıldı, willAttend:', willAttend);
@@ -143,13 +167,23 @@ const GuestRsvp = () => {
       if (!willAttend) {
         setShowDeclineMessage(true);
         setShowGuestForm(false);
+        setShowVolunteerForm(false);
         setGuests([]);
-      } else if (['EMPLOYEE', 'VIP'].includes(guest.guestType) && (!guest.guests || guest.guests.length < maxGuests)) {
-        setShowGuestForm(true);
-        setShowDeclineMessage(false);
       } else {
-        setShowGuestForm(false);
-        setShowDeclineMessage(false);
+        // Volunteer system aktifse ve guest'in volunteer bilgisi null ise volunteer formunu göster
+        if (volunteerSystemEnabled && guest.volunteer === null) {
+          setShowVolunteerForm(true);
+          setShowGuestForm(false);
+          setShowDeclineMessage(false);
+        } else if (['EMPLOYEE', 'VIP'].includes(guest.guestType) && (!guest.guests || guest.guests.length < maxGuests)) {
+          setShowGuestForm(true);
+          setShowVolunteerForm(false);
+          setShowDeclineMessage(false);
+        } else {
+          setShowGuestForm(false);
+          setShowVolunteerForm(false);
+          setShowDeclineMessage(false);
+        }
       }
     } catch (err) {
       const errorMessage =
@@ -158,6 +192,47 @@ const GuestRsvp = () => {
       console.error('handleResponse hatası:', err.response?.data || err.message);
       alert(errorMessage);
     }
+  };
+
+  const handleVolunteerResponse = async (isVolunteer) => {
+    try {
+      const volunteerFields = isVolunteer ? selectedVolunteerFields : [];
+      const response = await axios.post(
+        `${API_URL}/api/public/rsvp/${qrId}`,
+        { 
+          willAttend: true,
+          volunteer: isVolunteer,
+          volunteerFields: volunteerFields
+        },
+        { headers: { 'Content-Type': 'application/json' } }
+      );
+      console.log('Volunteer yanıtı alındı:', response.data);
+      setGuest({ ...guest, willAttend: true, responded: true, volunteer: isVolunteer, volunteerFields: volunteerFields });
+      setShowVolunteerForm(false);
+      
+      // Guest ekleme formunu kontrol et
+      if (['EMPLOYEE', 'VIP'].includes(guest.guestType) && (!guest.guests || guest.guests.length < maxGuests)) {
+        setShowGuestForm(true);
+      } else {
+        setShowGuestForm(false);
+      }
+    } catch (err) {
+      const errorMessage =
+        err.response?.data?.message || t('error') || 'Bir hata oluştu, lütfen tekrar deneyin.';
+      setError(errorMessage);
+      console.error('Volunteer yanıtı hatası:', err.response?.data || err.message);
+      alert(errorMessage);
+    }
+  };
+
+  const handleVolunteerFieldToggle = (field) => {
+    setSelectedVolunteerFields(prev => {
+      if (prev.includes(field)) {
+        return prev.filter(f => f !== field);
+      } else {
+        return [...prev, field];
+      }
+    });
   };
 
   const handleGuestInputChange = (e) => {
@@ -451,6 +526,84 @@ const GuestRsvp = () => {
           <p className={styles.textLg}>
             {t('rsvpEmail') || 'RSVP'}: <a href="mailto:ankara.rsvp@international.gc.ca" className={styles.textRed600}>ankara.rsvp@international.gc.ca</a>
           </p>
+        </div>
+      </div>
+    );
+  }
+
+  // Volunteer form sayfası
+  if (guest.willAttend && showVolunteerForm && guest.volunteer === null) {
+    return (
+      <div className={styles.container}>
+        <div className={styles.containerBackground} style={{ 
+          backgroundImage: `url(${CanadaFlag})`,
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'contain',
+          backgroundPosition: 'center'
+        }}></div>
+        <div className={styles.content}>
+          <h1 className={styles.h1}>
+            <div>Canada Club's</div>
+            <div>{eventInfo.eventName || t('eventName') || 'HALLOWEEN PARTY'}</div>
+          </h1>
+          <p className={`${styles.textXl} font-sans`}>
+            {t('dear')} {guest.firstName} {guest.lastName}
+          </p>
+          <p className={`${styles.textXl} font-sans`}>
+            {t('invitationLinePrefix') || 'You are invited to Canada Club\'s'} {eventInfo.eventName || t('eventName') || 'HALLOWEEN PARTY'}
+          </p>
+          <p className={styles.textLg}>
+            {t('foodAndBeverage')}
+          </p>
+          <p className={styles.textXl}>
+            <CalendarIcon />
+            {eventInfo.eventDate || t('eventDate')}
+          </p>
+          <p className={styles.textLg}>
+            {eventInfo.eventTime || t('eventTime')}
+          </p>
+          <p className={styles.textLg}>
+            <LocationIcon />
+            {eventInfo.eventLocation || t('eventLocation')}
+          </p>
+          <p className={styles.textSm}>
+            {eventInfo.eventAddress || 'Aziziye, Cinnah Street no: 58, 06690 Çankaya/Ankara'}
+          </p>
+          <p className={styles.textLg} style={{ marginTop: '2rem', marginBottom: '1rem', fontSize: '1.25rem', fontWeight: 600 }}>
+            {t('wouldYouLikeToVolunteer') || 'Would you like to volunteer?'}
+          </p>
+          {volunteers.length > 0 && (
+            <div className={styles.volunteerCheckboxContainer}>
+              {volunteers.map((volunteer, index) => (
+                <label key={index} className={styles.volunteerCheckboxLabel}>
+                  <input
+                    type="checkbox"
+                    checked={selectedVolunteerFields.includes(volunteer)}
+                    onChange={() => handleVolunteerFieldToggle(volunteer)}
+                    className={styles.volunteerCheckbox}
+                  />
+                  <span>{volunteer}</span>
+                </label>
+              ))}
+            </div>
+          )}
+          {error && <p className={styles.textRed500}>{error}</p>}
+          <div className={styles.buttonContainer}>
+            <button
+              onClick={() => handleVolunteerResponse(false)}
+              className={styles.bgWhite}
+            >
+              {t('no') || 'No'}
+            </button>
+            <button
+              onClick={() => handleVolunteerResponse(true)}
+              className={styles.bgRed600}
+              disabled={selectedVolunteerFields.length === 0}
+              style={{ opacity: selectedVolunteerFields.length === 0 ? 0.5 : 1, cursor: selectedVolunteerFields.length === 0 ? 'not-allowed' : 'pointer' }}
+            >
+              {t('yes') || 'Yes'}
+            </button>
+          </div>
         </div>
       </div>
     );
