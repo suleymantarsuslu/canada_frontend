@@ -144,7 +144,7 @@ const GuestRsvp = () => {
       if (volunteerSystemEnabled && guest.volunteer === null) {
         setShowVolunteerForm(true);
         setShowGuestForm(false);
-      } else if (['EMPLOYEE', 'VIP'].includes(guest.guestType) && (!guest.guests || guest.guests.length < maxGuests)) {
+      } else if (maxGuests > 0 && (!guest.guests || guest.guests.length < maxGuests)) {
         setShowGuestForm(true);
         setShowVolunteerForm(false);
       } else {
@@ -175,7 +175,7 @@ const GuestRsvp = () => {
           setShowVolunteerForm(true);
           setShowGuestForm(false);
           setShowDeclineMessage(false);
-        } else if (['EMPLOYEE', 'VIP'].includes(guest.guestType) && (!guest.guests || guest.guests.length < maxGuests)) {
+        } else if (maxGuests > 0 && (!guest.guests || guest.guests.length < maxGuests)) {
           setShowGuestForm(true);
           setShowVolunteerForm(false);
           setShowDeclineMessage(false);
@@ -211,7 +211,7 @@ const GuestRsvp = () => {
       setShowVolunteerForm(false);
       
       // Guest ekleme formunu kontrol et
-      if (['EMPLOYEE', 'VIP'].includes(guest.guestType) && (!guest.guests || guest.guests.length < maxGuests)) {
+      if (maxGuests > 0 && (!guest.guests || guest.guests.length < maxGuests)) {
         setShowGuestForm(true);
       } else {
         setShowGuestForm(false);
@@ -610,7 +610,7 @@ const GuestRsvp = () => {
   }
 
   // Ticketlerin göründüğü ve misafir ekleme formunun açılabildiği kısım:
-  if (guest.willAttend && ['EMPLOYEE', 'VIP'].includes(guest.guestType) && showGuestForm && guests.length < maxGuests) {
+  if (guest.willAttend && maxGuests > 0 && showGuestForm && guests.length < maxGuests) {
     // Misafir ekleme formunu göster
     return (
       <div className={styles.container}>
@@ -698,7 +698,7 @@ const GuestRsvp = () => {
     );
   }
   // Diğer durumlarda ticketleri göster
-  if (guest.willAttend && (!showGuestForm || (['EMPLOYEE', 'VIP'].includes(guest.guestType) && guests.length > 0))) {
+  if (guest.willAttend && (!showGuestForm || (maxGuests > 0 && guests.length > 0))) {
     return (
       <div className={styles.container}>
         <div
@@ -755,7 +755,7 @@ const GuestRsvp = () => {
             ))}
           </div>
           {/* Misafir ekle butonu: RSVP açık ve guest daha fazla misafir ekleyebiliyorsa göster */}
-          {rsvpEnabled && ['EMPLOYEE', 'VIP'].includes(guest.guestType) && guests.length < maxGuests && (
+          {rsvpEnabled && maxGuests > 0 && guests.length < maxGuests && (
             <button className={styles.addGuestButton} style={{ marginTop: '1rem', marginBottom: '2rem' }} onClick={handleShowGuestForm}>
               {t('addGuest') || 'Misafir Ekle'}
             </button>
