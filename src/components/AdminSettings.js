@@ -426,8 +426,8 @@ const AdminSettings = () => {
       );
       setVolunteerSystemEnabled(response.data.volunteerSystemEnabled);
       setError('');
-      alert(t('volunteerSystemToggled', { status: response.data.volunteerSystemEnabled ? t('enabled') : t('disabled') }) || 
-            `Volunteer System ${response.data.volunteerSystemEnabled ? 'açıldı' : 'kapatıldı'}`);
+      const statusText = response.data.volunteerSystemEnabled ? t('enabled') : t('disabled');
+      alert(`${t('toggleVolunteerSystem') || 'Volunteer System'} ${statusText}`);
     } catch (error) {
       console.error('Volunteer system durumu değiştirme hatası:', error);
       let errorMessage = t('volunteerSystemToggleFailed') || 'Volunteer system durumu değiştirilemedi';
