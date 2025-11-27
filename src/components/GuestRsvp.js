@@ -48,7 +48,8 @@ const GuestRsvp = () => {
     eventName: '',
     eventDate: '',
     eventTime: '',
-    eventLocation: ''
+    eventLocation: '',
+    eventAddress: ''
   });
 
   const API_URL = 'https://backend.canada-ankara.com';
@@ -98,7 +99,8 @@ const GuestRsvp = () => {
           eventName: response.data.eventName || '',
           eventDate: response.data.eventDate || '',
           eventTime: response.data.eventTime || '',
-          eventLocation: response.data.eventLocation || ''
+          eventLocation: response.data.eventLocation || '',
+          eventAddress: response.data.eventAddress || ''
         });
       } catch (err) {
         console.error('Event bilgileri alma hatası:', err.response?.data || err.message);
@@ -107,7 +109,8 @@ const GuestRsvp = () => {
           eventName: '',
           eventDate: '',
           eventTime: '',
-          eventLocation: ''
+          eventLocation: '',
+          eventAddress: ''
         });
       }
     };
@@ -341,7 +344,7 @@ const GuestRsvp = () => {
             }}
           ></div>
           <div className={styles.content}>
-            <h1 className={styles.h1}>{eventInfo.eventName || t('eventName') || t('eventTitle')}</h1>
+            <h1 className={styles.h1}>{eventInfo.eventName ? `Canada Club's ${eventInfo.eventName}` : (t('eventName') ? `Canada Club's ${t('eventName')}` : t('eventTitle'))}</h1>
             <p className={`${styles.textXl} font-sans`}>
               {t('dear')} {guest.firstName} {guest.lastName}
             </p>
@@ -363,7 +366,7 @@ const GuestRsvp = () => {
               {eventInfo.eventLocation || t('eventLocation')}
             </p>
             <p className={styles.textSm}>
-              Aziziye, Cinnah Street no: 58, 06690 Çankaya/Ankara
+              {eventInfo.eventAddress || 'Aziziye, Cinnah Street no: 58, 06690 Çankaya/Ankara'}
             </p>
             <p className={styles.textLg}>
               {t('rsvpEmail') || 'RSVP'}: <a href="mailto:canadaclub.ankara@international.gc.ca" className={styles.textRed600}>canadaclub.ankara@international.gc.ca</a>
@@ -411,7 +414,7 @@ const GuestRsvp = () => {
             }}
           ></div>
         <div className={styles.content}>
-          <h1 className={styles.h1}>{eventInfo.eventName || t('eventTitle')}</h1>
+          <h1 className={styles.h1}>{eventInfo.eventName ? `Canada Club's ${eventInfo.eventName}` : (t('eventName') ? `Canada Club's ${t('eventName')}` : t('eventTitle'))}</h1>
           <p className={`${styles.textXl} font-sans`}>
             {t('rsvpClosedMessage') || 'Üzgünüz fakat kayıtlarımız sona ermiştir. Talep ve sorularınız için canadaclub.ankara@international.gc.ca ile iletişime geçebilirsiniz.'}
           </p>
@@ -432,7 +435,7 @@ const GuestRsvp = () => {
           style={{ backgroundImage: `url(${CanadaFlag})` }}
         ></div>
         <div className={styles.content}>
-          <h1 className={styles.h1}>{eventInfo.eventName || t('eventTitle')}</h1>
+          <h1 className={styles.h1}>{eventInfo.eventName ? `Canada Club's ${eventInfo.eventName}` : (t('eventName') ? `Canada Club's ${t('eventName')}` : t('eventTitle'))}</h1>
           <p className={`${styles.textXl} font-sans`}>
             {t('declineMessage') || 'Sizleri aramızda göremeyeceğimiz için üzgünüz.'}
           </p>
@@ -456,7 +459,7 @@ const GuestRsvp = () => {
           backgroundPosition: 'center'
         }}></div>
         <div className={styles.content}>
-          <h1 className={styles.h1}>{eventInfo.eventName || t('eventTitle')}</h1>
+          <h1 className={styles.h1}>{eventInfo.eventName ? `Canada Club's ${eventInfo.eventName}` : (t('eventName') ? `Canada Club's ${t('eventName')}` : t('eventTitle'))}</h1>
           <p className={`${styles.textXl} font-sans`}>
             {t('dear')} {guest.firstName} {guest.lastName}
           </p>
@@ -611,7 +614,7 @@ const GuestRsvp = () => {
           style={{ backgroundImage: `url(${CanadaFlag})` }}
         ></div>
         <div className={styles.content}>
-          <h1 className={styles.h1}>{eventInfo.eventName || t('eventTitle')}</h1>
+          <h1 className={styles.h1}>{eventInfo.eventName ? `Canada Club's ${eventInfo.eventName}` : (t('eventName') ? `Canada Club's ${t('eventName')}` : t('eventTitle'))}</h1>
           <p className={`${styles.textXl} font-sans`}>
             {t('dear')} {guest.firstName} {guest.lastName}
           </p>

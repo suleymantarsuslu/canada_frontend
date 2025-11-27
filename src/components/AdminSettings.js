@@ -20,7 +20,8 @@ const AdminSettings = () => {
     eventName: '',
     eventDate: '',
     eventTime: '',
-    eventLocation: ''
+    eventLocation: '',
+    eventAddress: ''
   });
   const [confirmModalAction, setConfirmModalAction] = useState(() => {});
   const [error, setError] = useState('');
@@ -198,7 +199,8 @@ const AdminSettings = () => {
         eventName: response.data.eventName || '',
         eventDate: response.data.eventDate || '',
         eventTime: response.data.eventTime || '',
-        eventLocation: response.data.eventLocation || ''
+        eventLocation: response.data.eventLocation || '',
+        eventAddress: response.data.eventAddress || ''
       });
       setError('');
     } catch (error) {
@@ -208,7 +210,8 @@ const AdminSettings = () => {
         eventName: '',
         eventDate: '',
         eventTime: '',
-        eventLocation: ''
+        eventLocation: '',
+        eventAddress: ''
       });
     }
   };
@@ -660,7 +663,8 @@ const AdminSettings = () => {
         eventName: response.data.eventName || '',
         eventDate: response.data.eventDate || '',
         eventTime: response.data.eventTime || '',
-        eventLocation: response.data.eventLocation || ''
+        eventLocation: response.data.eventLocation || '',
+        eventAddress: response.data.eventAddress || ''
       });
       setIsEventInformationModalOpen(true);
     } catch (error) {
@@ -1444,6 +1448,16 @@ const AdminSettings = () => {
                     value={eventInformation.eventLocation}
                     onChange={(e) => handleEventInformationChange('eventLocation', e.target.value)}
                     placeholder={t('eventLocationPlaceholder') || 'Örn: At the Canadian Embassy in Ankara'}
+                  />
+                </div>
+                <div className="mb-3">
+                  <label className="form-label">{t('eventAddressLabel') || 'Event Address'}</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={eventInformation.eventAddress}
+                    onChange={(e) => handleEventInformationChange('eventAddress', e.target.value)}
+                    placeholder={t('eventAddressPlaceholder') || 'Örn: Aziziye, Cinnah Street no: 58, 06690 Çankaya/Ankara'}
                   />
                 </div>
               </div>

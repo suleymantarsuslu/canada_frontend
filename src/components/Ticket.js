@@ -36,7 +36,7 @@ const Ticket = ({ guest, qrId, isPlusOne = false, plusOneGuest, eventInfo = null
       <div className={styles.mapleLeaf} style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}><MapleLeaf /></div>
       <div className={styles.content}>
         <img src={TicketHeader} alt="Ticket Header" className={styles.ticketHeader} />
-        <h1 className={styles.h1}>{eventInfo?.eventName || t('eventName') || t('eventTitle') || 'Canada Club\'s Summer BBQ 2025'}</h1>
+        <h1 className={styles.h1}>{eventInfo?.eventName ? `Canada Club's ${eventInfo.eventName}` : (t('eventName') ? `Canada Club's ${t('eventName')}` : t('eventTitle') || 'Canada Club\'s Summer BBQ 2025')}</h1>
         <p className={`${styles.textXl} font-sans`}>
           {t('dear') || 'Dear'} {guest.firstName} {guest.lastName}
         </p>
@@ -58,7 +58,7 @@ const Ticket = ({ guest, qrId, isPlusOne = false, plusOneGuest, eventInfo = null
           {eventInfo?.eventLocation || t('eventLocation') || 'At the Canadian Embassy in Ankara'}
         </p>
         <p className={styles.textSm}>
-          Aziziye, Cinnah Street no: 58, 06690 Çankaya/Ankara
+          {eventInfo?.eventAddress || 'Aziziye, Cinnah Street no: 58, 06690 Çankaya/Ankara'}
         </p>
         <p className={styles.textLg}>
           {t('rsvpEmail') || 'RSVP'}: <a href="mailto:canadaclub.ankara@international.gc.ca" className={styles.textRed600}>canadaclub.ankara@international.gc.ca</a>
