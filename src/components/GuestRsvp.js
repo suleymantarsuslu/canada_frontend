@@ -417,7 +417,10 @@ const GuestRsvp = () => {
             }}
           ></div>
         <div className={styles.content}>
-          <h1 className={styles.h1}>{eventInfo.eventName ? `Canada Club's ${eventInfo.eventName}` : (t('eventName') ? `Canada Club's ${t('eventName')}` : t('eventTitle'))}</h1>
+          <h1 className={styles.h1}>
+            <div>Canada Club's</div>
+            <div>{eventInfo.eventName || t('eventName') || 'HALLOWEEN PARTY'}</div>
+          </h1>
           <p className={`${styles.textXl} font-sans`}>
             {t('rsvpClosedMessage') || 'Üzgünüz fakat kayıtlarımız sona ermiştir. Talep ve sorularınız için canadaclub.ankara@international.gc.ca ile iletişime geçebilirsiniz.'}
           </p>
@@ -438,7 +441,10 @@ const GuestRsvp = () => {
           style={{ backgroundImage: `url(${CanadaFlag})` }}
         ></div>
         <div className={styles.content}>
-          <h1 className={styles.h1}>{eventInfo.eventName ? `Canada Club's ${eventInfo.eventName}` : (t('eventName') ? `Canada Club's ${t('eventName')}` : t('eventTitle'))}</h1>
+          <h1 className={styles.h1}>
+            <div>Canada Club's</div>
+            <div>{eventInfo.eventName || t('eventName') || 'HALLOWEEN PARTY'}</div>
+          </h1>
           <p className={`${styles.textXl} font-sans`}>
             {t('declineMessage') || 'Sizleri aramızda göremeyeceğimiz için üzgünüz.'}
           </p>
@@ -462,12 +468,15 @@ const GuestRsvp = () => {
           backgroundPosition: 'center'
         }}></div>
         <div className={styles.content}>
-          <h1 className={styles.h1}>{eventInfo.eventName ? `Canada Club's ${eventInfo.eventName}` : (t('eventName') ? `Canada Club's ${t('eventName')}` : t('eventTitle'))}</h1>
+          <h1 className={styles.h1}>
+            <div>Canada Club's</div>
+            <div>{eventInfo.eventName || t('eventName') || 'HALLOWEEN PARTY'}</div>
+          </h1>
           <p className={`${styles.textXl} font-sans`}>
             {t('dear')} {guest.firstName} {guest.lastName}
           </p>
           <p className={`${styles.textXl} font-sans`}>
-            {t('invitationLine')}
+            {t('invitationLinePrefix') || 'You are invited to Canada Club\'s'} {eventInfo.eventName || t('eventName') || 'HALLOWEEN PARTY'}
           </p>
           <p className={styles.textLg}>
             {t('foodAndBeverage')}
@@ -544,12 +553,15 @@ const GuestRsvp = () => {
           style={{ backgroundImage: `url(${CanadaFlag})` }}
         ></div>
         <div className={styles.content}>
-          <h1 className={styles.h1}>{eventInfo.eventName || t('eventName') || t('eventTitle')}</h1>
+          <h1 className={styles.h1}>
+            <div>Canada Club's</div>
+            <div>{eventInfo.eventName || t('eventName') || 'HALLOWEEN PARTY'}</div>
+          </h1>
           <p className={`${styles.textXl} font-sans`}>
             {t('dear')} {guest.firstName} {guest.lastName}
           </p>
           <p className={`${styles.textXl} font-sans`}>
-            {t('invitationLine')}
+            {t('invitationLinePrefix') || 'You are invited to Canada Club\'s'} {eventInfo.eventName || t('eventName') || 'HALLOWEEN PARTY'}
           </p>
           <p className={styles.textLg}>
             {t('foodAndBeverage')}
@@ -617,12 +629,15 @@ const GuestRsvp = () => {
           style={{ backgroundImage: `url(${CanadaFlag})` }}
         ></div>
         <div className={styles.content}>
-          <h1 className={styles.h1}>{eventInfo.eventName ? `Canada Club's ${eventInfo.eventName}` : (t('eventName') ? `Canada Club's ${t('eventName')}` : t('eventTitle'))}</h1>
+          <h1 className={styles.h1}>
+            <div>Canada Club's</div>
+            <div>{eventInfo.eventName || t('eventName') || 'HALLOWEEN PARTY'}</div>
+          </h1>
           <p className={`${styles.textXl} font-sans`}>
             {t('dear')} {guest.firstName} {guest.lastName}
           </p>
           <p className={`${styles.textXl} font-sans`}>
-            {t('invitationLine')}
+            {t('invitationLinePrefix') || 'You are invited to Canada Club\'s'} {eventInfo.eventName || t('eventName') || 'HALLOWEEN PARTY'}
           </p>
           <p className={styles.textLg}>
             {t('foodAndBeverage')}
