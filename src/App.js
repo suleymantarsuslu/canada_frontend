@@ -173,6 +173,7 @@ const App = () => {
         '/checkin',
         '/manual-checkin',
         '/participants',
+        '/volunteers',
         '/users',
         '/settings',
         '/admin-settings',
