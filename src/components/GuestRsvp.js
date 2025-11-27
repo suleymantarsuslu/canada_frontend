@@ -306,9 +306,6 @@ const GuestRsvp = () => {
             style={{ backgroundImage: `url(${CanadaFlag})` }}
           ></div>
           <div className={styles.content}>
-            <p className={`${styles.textXl} font-sans`}>
-              Dear Colleagues,
-            </p>
             <h1 className={styles.h1}>{t('eventTitle')}</h1>
             <p className={`${styles.textXl} font-sans`}>
               {t('dear')} {guest.firstName} {guest.lastName}
@@ -414,9 +411,6 @@ const GuestRsvp = () => {
       <div className={styles.container}>
         <div className={styles.containerBackground} style={{ backgroundImage: `url(${CanadaFlag})` }}></div>
         <div className={styles.content}>
-          <p className={`${styles.textXl} font-sans`}>
-            Dear Colleagues,
-          </p>
           <h1 className={styles.h1}>{t('eventTitle')}</h1>
           <p className={`${styles.textXl} font-sans`}>
             {t('dear')} {guest.firstName} {guest.lastName}
@@ -499,9 +493,6 @@ const GuestRsvp = () => {
           style={{ backgroundImage: `url(${CanadaFlag})` }}
         ></div>
         <div className={styles.content}>
-          <p className={`${styles.textXl} font-sans`}>
-            Dear Colleagues,
-          </p>
           <h1 className={styles.h1}>{t('eventTitle')}</h1>
           <p className={`${styles.textXl} font-sans`}>
             {t('dear')} {guest.firstName} {guest.lastName}
@@ -575,9 +566,6 @@ const GuestRsvp = () => {
           style={{ backgroundImage: `url(${CanadaFlag})` }}
         ></div>
         <div className={styles.content}>
-          <p className={`${styles.textXl} font-sans`}>
-            Dear Colleagues,
-          </p>
           <h1 className={styles.h1}>{t('eventTitle')}</h1>
           <p className={`${styles.textXl} font-sans`}>
             {t('dear')} {guest.firstName} {guest.lastName}
