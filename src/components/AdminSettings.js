@@ -13,6 +13,8 @@ const AdminSettings = () => {
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
   const [isGuestTypeSettingsModalOpen, setIsGuestTypeSettingsModalOpen] = useState(false);
+  const [isVolunteerSettingsModalOpen, setIsVolunteerSettingsModalOpen] = useState(false);
+  const [volunteers, setVolunteers] = useState([]);
   const [confirmModalAction, setConfirmModalAction] = useState(() => {});
   const [error, setError] = useState('');
   const [rsvpEnabled, setRsvpEnabled] = useState(true);
@@ -116,7 +118,28 @@ const AdminSettings = () => {
     checkRsvpStatus();
     checkTelegramStatus();
     loadGuestTypeSettings();
+    loadVolunteerSettings();
   }, [t]);
+
+  const loadVolunteerSettings = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      return;
+    }
+
+    try {
+      const response = await axios.get('https://backend.canada-ankara.com/api/admin/volunteer-settings', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      console.log('Volunteer ayarları alındı:', response.data);
+      setVolunteers(response.data.volunteers || []);
+      setError('');
+    } catch (error) {
+      console.error('Volunteer ayarları alma hatası:', error);
+      // Hata durumunda boş array kullan
+      setVolunteers([]);
+    }
+  };
 
   const onDrop = async (acceptedFiles) => {
     if (acceptedFiles.length === 0) {
@@ -507,6 +530,109 @@ const AdminSettings = () => {
     setIsGuestTypeSettingsModalOpen(true);
   };
 
+  const handleVolunteerSettingsClick = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setError(`${t('error')}: ${t('noAuthToken')}`);
+      setIsErrorModalOpen(true);
+      return;
+    }
+
+    try {
+      const response = await axios.get('https://backend.canada-ankara.com/api/admin/volunteer-settings', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const loadedVolunteers = response.data.volunteers || [];
+      // Eğer hiç volunteer yoksa, boş bir alan ekle
+      if (loadedVolunteers.length === 0) {
+        setVolunteers([{ id: null, name: '' }]);
+      } else {
+        setVolunteers(loadedVolunteers);
+      }
+      setIsVolunteerSettingsModalOpen(true);
+    } catch (error) {
+      console.error('Volunteer ayarları alma hatası:', error);
+      // Hata durumunda boş bir alan ekle
+      setVolunteers([{ id: null, name: '' }]);
+      setIsVolunteerSettingsModalOpen(true);
+    }
+  };
+
+  const handleVolunteerSettingsClose = () => {
+    // Modal kapatıldığında orijinal değerlere geri dön
+    loadVolunteerSettings();
+    setIsVolunteerSettingsModalOpen(false);
+  };
+
+  const handleVolunteerChange = (index, value) => {
+    const updatedVolunteers = [...volunteers];
+    updatedVolunteers[index] = { ...updatedVolunteers[index], name: value };
+    setVolunteers(updatedVolunteers);
+  };
+
+  const handleAddVolunteer = () => {
+    // En az bir boş alan varsa yeni ekleme
+    const hasEmptyField = volunteers.some(v => !v.name || v.name.trim() === '');
+    if (hasEmptyField) {
+      alert(t('fillEmptyVolunteerField') || 'Lütfen boş alanları doldurun');
+      return;
+    }
+    setVolunteers([...volunteers, { id: null, name: '' }]);
+  };
+
+  const handleDeleteVolunteer = (index) => {
+    const updatedVolunteers = volunteers.filter((_, i) => i !== index);
+    setVolunteers(updatedVolunteers);
+  };
+
+  const handleVolunteerSettingsSave = async () => {
+    // Boş alan kontrolü
+    const hasEmptyField = volunteers.some(v => !v.name || v.name.trim() === '');
+    if (hasEmptyField) {
+      alert(t('fillAllVolunteerFields') || 'Lütfen tüm alanları doldurun');
+      return;
+    }
+
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setError(`${t('error')}: ${t('noAuthToken')}`);
+      setIsErrorModalOpen(true);
+      return;
+    }
+
+    try {
+      const response = await axios.post(
+        'https://backend.canada-ankara.com/api/admin/volunteer-settings',
+        { volunteers: volunteers.map(v => ({ name: v.name.trim() })) },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Accept-Language': t('i18n.language'),
+          },
+        }
+      );
+      console.log('Volunteer ayarları kaydedildi:', response.data);
+      setIsVolunteerSettingsModalOpen(false);
+      alert(t('volunteerSettingsSaved') || 'Volunteer ayarları başarıyla kaydedildi');
+      await loadVolunteerSettings();
+      setError('');
+    } catch (error) {
+      console.error('Volunteer ayarları kaydetme hatası:', error);
+      let errorMessage = t('volunteerSettingsSaveFailed') || 'Volunteer ayarları kaydedilemedi';
+      if (error.response) {
+        if (error.response.status === 401) {
+          errorMessage = t('unauthorizedError');
+        } else if (error.response.status === 500) {
+          errorMessage = error.response.data.message || t('serverError');
+        }
+      } else if (error.request) {
+        errorMessage = t('networkError');
+      }
+      setError(`${t('error')}: ${errorMessage}`);
+      setIsErrorModalOpen(true);
+    }
+  };
+
   const handleGuestTypeSettingsSave = async () => {
     const token = localStorage.getItem('token');
     if (!token) {
@@ -669,6 +795,12 @@ const AdminSettings = () => {
                   className="btn btn-canada mb-3"
                 >
                   {t('guestTypeSettings') || 'Guest Type Ayarları'}
+                </button>
+                <button
+                  onClick={handleVolunteerSettingsClick}
+                  className="btn btn-canada mb-3"
+                >
+                  {t('volunteerSettings') || 'Volunteer Settings'}
                 </button>
                 <button
                   onClick={handleImportClick}
@@ -1040,6 +1172,74 @@ const AdminSettings = () => {
                   onClick={handleGuestTypeSettingsSave}
                 >
                   {t('save') || 'Kaydet'}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {isVolunteerSettingsModalOpen && (
+        <div className="modal fade show d-block" tabIndex="-1" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
+          <div className="modal-dialog modal-lg">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">{t('volunteerSettings') || 'Volunteer Settings'}</h5>
+                <button
+                  type="button"
+                  className="btn-close"
+                  onClick={handleVolunteerSettingsClose}
+                ></button>
+              </div>
+              <div className="modal-body">
+                <p className="mb-3">{t('volunteerSettingsDescription') || 'Volunteer tiplerini ekleyin, düzenleyin veya silin:'}</p>
+                {volunteers.length === 0 && (
+                  <p className="text-muted mb-3">{t('noVolunteers') || 'Henüz volunteer eklenmemiş. Aşağıdaki artı butonuna tıklayarak ekleyebilirsiniz.'}</p>
+                )}
+                {volunteers.map((volunteer, index) => (
+                  <div key={index} className="mb-3 d-flex align-items-center">
+                    <input
+                      type="text"
+                      className="form-control me-2"
+                      placeholder={t('volunteerNamePlaceholder') || 'Örn: bartender, token sale'}
+                      value={volunteer.name || ''}
+                      onChange={(e) => handleVolunteerChange(index, e.target.value)}
+                    />
+                    <button
+                      type="button"
+                      className="btn btn-danger"
+                      onClick={() => handleDeleteVolunteer(index)}
+                      title={t('delete') || 'Sil'}
+                    >
+                      ×
+                    </button>
+                  </div>
+                ))}
+                <div className="mt-3">
+                  <button
+                    type="button"
+                    className="btn btn-canada"
+                    onClick={handleAddVolunteer}
+                    title={t('addVolunteer') || 'Yeni Volunteer Ekle'}
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-canada-secondary"
+                  onClick={handleVolunteerSettingsClose}
+                >
+                  {t('cancel') || 'İptal'}
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-canada"
+                  onClick={handleVolunteerSettingsSave}
+                >
+                  {t('save') || 'Tamam'}
                 </button>
               </div>
             </div>
