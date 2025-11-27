@@ -33,12 +33,7 @@ const Ticket = ({ guest, qrId, isPlusOne = false, plusOneGuest }) => {
         className={styles.containerBackground}
         style={{ backgroundImage: `url(${CanadaFlag})` }}
       ></div>
-      <div className={`${styles.mapleLeaf} ${styles.top10} ${styles.left20}`}><MapleLeaf /></div>
-      <div className={`${styles.mapleLeaf} ${styles.bottom20} ${styles.right30}`}><MapleLeaf /></div>
-      <div className={`${styles.mapleLeaf} ${styles.top40} ${styles.right10}`}><MapleLeaf /></div>
-      <div className={`${styles.mapleLeaf} ${styles.bottom10} ${styles.left30}`}><MapleLeaf /></div>
-      <div className={`${styles.mapleLeaf} ${styles.top20} ${styles.right60}`}><MapleLeaf /></div>
-      <div className={`${styles.mapleLeaf} ${styles.bottom40} ${styles.left60}`}><MapleLeaf /></div>
+      <div className={styles.mapleLeaf} style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}><MapleLeaf /></div>
       <div className={styles.content}>
         <img src={TicketHeader} alt="Ticket Header" className={styles.ticketHeader} />
         <h1 className={styles.h1}>{t('eventTitle') || 'Canada Club\'s Summer BBQ 2025'}</h1>
