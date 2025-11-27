@@ -341,7 +341,7 @@ const GuestRsvp = () => {
             }}
           ></div>
           <div className={styles.content}>
-            <h1 className={styles.h1}>{eventInfo.eventName || t('eventTitle')}</h1>
+            <h1 className={styles.h1}>{eventInfo.eventName || t('eventName') || t('eventTitle')}</h1>
             <p className={`${styles.textXl} font-sans`}>
               {t('dear')} {guest.firstName} {guest.lastName}
             </p>
@@ -538,7 +538,7 @@ const GuestRsvp = () => {
           style={{ backgroundImage: `url(${CanadaFlag})` }}
         ></div>
         <div className={styles.content}>
-          <h1 className={styles.h1}>{t('eventTitle')}</h1>
+          <h1 className={styles.h1}>{eventInfo.eventName || t('eventName') || t('eventTitle')}</h1>
           <p className={`${styles.textXl} font-sans`}>
             {t('dear')} {guest.firstName} {guest.lastName}
           </p>
