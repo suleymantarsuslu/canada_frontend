@@ -92,6 +92,7 @@ const Navbar = ({ setToken, onTimerEnd }) => {
     { path: '/checkin', label: t('checkIn'), roles: ['Admin', 'Editor', 'CheckInEditor'] },
     { path: '/manual-checkin', label: t('manualCheckIn'), roles: ['Admin', 'Editor', 'CheckInEditor'] },
     { path: '/participants', label: t('participants'), roles: ['Admin', 'Editor', 'ParticipantEditor'] },
+    { path: '/volunteers', label: t('volunteers'), roles: ['Admin', 'Editor', 'ParticipantEditor'] },
     { path: '/settings', label: t('eventSettings'), roles: ['Admin', 'Editor', 'GuestEditor'] },
     { path: '/users', label: t('users'), roles: ['Admin', 'UserEditor'] },
     { path: '/admin-settings', label: t('adminSettings'), roles: ['Admin'] },

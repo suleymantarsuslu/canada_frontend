@@ -8,6 +8,7 @@ import Navbar from './components/Navbar';
 import Home from './components/Home';
 import CheckIn from './components/CheckIn';
 import ParticipantList from './components/ParticipantList';
+import Volunteers from './components/Volunteers';
 import Users from './components/Users';
 import EventSettings from './components/EventSettings';
 import ManualCheckIn from './components/ManualCheckIn';
@@ -317,6 +318,16 @@ const App = () => {
           element={
             hasAccess(['Admin', 'Editor', 'ParticipantEditor']) ? (
               <ParticipantList />
+            ) : (
+              <div className="text-center mt-5">{t('unauthorized')}</div>
+            )
+          }
+        />
+        <Route
+          path="/volunteers"
+          element={
+            hasAccess(['Admin', 'Editor', 'ParticipantEditor']) ? (
+              <Volunteers />
             ) : (
               <div className="text-center mt-5">{t('unauthorized')}</div>
             )
