@@ -5,6 +5,9 @@ import { useDropzone } from 'react-dropzone';
 import ConfirmModal from './ConfirmModal';
 import waitGif from '../assets/wait.gif';
 
+const DEFAULT_EVENT_WAIVER_TEXT =
+  'I voluntarily agree to attend a social event/party hosted by the Embassy of Canada in Ankara, taking place on the Embassy premises. I understand that attending this event may involve interaction with other guests, Embassy staff, and service providers. I also acknowledge that the event will take place on official Embassy grounds, which may involve heightened security procedures and protocols.\n\nBy checking this box, I confirm that I am accepting this waiver on behalf of myself and any guest(s) I register, and I release the Government of Canada, the Embassy of Canada, and all its representatives from any liability and responsibility in case of injury, loss, or damage that may occur during or as a result of the event.';
+
 const AdminSettings = () => {
   const { t } = useTranslation();
   const [isImportModalOpen, setIsImportModalOpen] = useState(false);
@@ -21,7 +24,8 @@ const AdminSettings = () => {
     eventDate: '',
     eventTime: '',
     eventLocation: '',
-    eventAddress: ''
+    eventAddress: '',
+    eventWaiverText: DEFAULT_EVENT_WAIVER_TEXT
   });
   const [confirmModalAction, setConfirmModalAction] = useState(() => {});
   const [error, setError] = useState('');
@@ -200,7 +204,8 @@ const AdminSettings = () => {
         eventDate: response.data.eventDate || '',
         eventTime: response.data.eventTime || '',
         eventLocation: response.data.eventLocation || '',
-        eventAddress: response.data.eventAddress || ''
+        eventAddress: response.data.eventAddress || '',
+        eventWaiverText: response.data.eventWaiverText || DEFAULT_EVENT_WAIVER_TEXT
       });
       setError('');
     } catch (error) {
@@ -211,7 +216,8 @@ const AdminSettings = () => {
         eventDate: '',
         eventTime: '',
         eventLocation: '',
-        eventAddress: ''
+        eventAddress: '',
+        eventWaiverText: DEFAULT_EVENT_WAIVER_TEXT
       });
     }
   };
@@ -664,7 +670,8 @@ const AdminSettings = () => {
         eventDate: response.data.eventDate || '',
         eventTime: response.data.eventTime || '',
         eventLocation: response.data.eventLocation || '',
-        eventAddress: response.data.eventAddress || ''
+        eventAddress: response.data.eventAddress || '',
+        eventWaiverText: response.data.eventWaiverText || DEFAULT_EVENT_WAIVER_TEXT
       });
       setIsEventInformationModalOpen(true);
     } catch (error) {
@@ -1458,6 +1465,16 @@ const AdminSettings = () => {
                     value={eventInformation.eventAddress}
                     onChange={(e) => handleEventInformationChange('eventAddress', e.target.value)}
                     placeholder={t('eventAddressPlaceholder') || 'Örn: Aziziye, Cinnah Street no: 58, 06690 Çankaya/Ankara'}
+                  />
+                </div>
+                <div className="mb-3">
+                  <label className="form-label">{t('eventWaiverLabel') || 'Checkbox Text'}</label>
+                  <textarea
+                    className="form-control"
+                    rows={8}
+                    value={eventInformation.eventWaiverText}
+                    onChange={(e) => handleEventInformationChange('eventWaiverText', e.target.value)}
+                    placeholder={t('eventWaiverPlaceholder') || 'Enter the checkbox text'}
                   />
                 </div>
               </div>
