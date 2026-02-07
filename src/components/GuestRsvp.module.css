@@ -515,8 +515,8 @@
               0 0 40px rgba(220, 38, 38, 0.3);
   border: 3px solid #dc2626;
   padding: 2rem 2.5rem;
-  min-width: 350px;
-  max-width: 95vw;
+  width: 100%;
+  max-width: 40rem;
   max-height: 90vh;
   overflow-y: auto;
   position: relative;
