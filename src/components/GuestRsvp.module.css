@@ -168,6 +168,60 @@
   text-shadow: 0 0 10px rgba(220, 38, 38, 0.8);
 }
 
+/* Waiver checkbox */
+.waiverContainer {
+  margin: 1.5rem 0 1rem;
+  text-align: left;
+}
+
+.waiverLabel {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  font-size: 0.95rem;
+  color: #e5e7eb;
+  line-height: 1.4;
+}
+
+.waiverCheckbox {
+  margin-top: 0.2rem;
+  width: 18px;
+  height: 18px;
+  accent-color: #dc2626;
+  border: 2px solid #dc2626;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.waiverCheckboxError {
+  outline: 2px solid #dc2626;
+  box-shadow: 0 0 10px rgba(220, 38, 38, 0.6);
+}
+
+.termsLink {
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  color: #dc2626;
+  text-decoration: underline;
+  cursor: pointer;
+  font: inherit;
+  transition: all 0.3s;
+}
+
+.termsLink:hover {
+  color: #b91c1c;
+  text-shadow: 0 0 10px rgba(220, 38, 38, 0.8);
+}
+
+.waiverErrorText {
+  margin-top: 0.5rem;
+  color: #dc2626;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
 /* Buton Stilleri - Canada Theme */
 .bgRed600 {
   background: linear-gradient(145deg, #dc2626 0%, #b91c1c 100%);

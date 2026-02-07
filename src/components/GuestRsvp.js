@@ -53,8 +53,12 @@ const GuestRsvp = () => {
     eventDate: '',
     eventTime: '',
     eventLocation: '',
-    eventAddress: ''
+    eventAddress: '',
+    eventWaiverText: ''
   });
+  const [waiverAccepted, setWaiverAccepted] = useState(false);
+  const [waiverError, setWaiverError] = useState(false);
+  const [isWaiverModalOpen, setIsWaiverModalOpen] = useState(false);
 
   const API_URL = 'https://backend.canada-ankara.com';
 
@@ -104,7 +108,8 @@ const GuestRsvp = () => {
           eventDate: response.data.eventDate || '',
           eventTime: response.data.eventTime || '',
           eventLocation: response.data.eventLocation || '',
-          eventAddress: response.data.eventAddress || ''
+          eventAddress: response.data.eventAddress || '',
+          eventWaiverText: response.data.eventWaiverText || ''
         });
       } catch (err) {
         console.error('Event bilgileri alma hatası:', err.response?.data || err.message);
@@ -114,7 +119,8 @@ const GuestRsvp = () => {
           eventDate: '',
           eventTime: '',
           eventLocation: '',
-          eventAddress: ''
+          eventAddress: '',
+          eventWaiverText: ''
         });
       }
     };
@@ -270,6 +276,36 @@ const GuestRsvp = () => {
       alert(errorMessage);
     }
   };
+
+  const handleAttendClick = () => {
+    if (!waiverAccepted) {
+      setWaiverError(true);
+      alert('Please accept the terms and conditions before proceeding.');
+      return;
+    }
+    handleResponse(true);
+  };
+
+  const waiverModal = isWaiverModalOpen ? (
+    <div className={styles.modalOverlay}>
+      <div className={styles.modal}>
+        <div className={styles.modalHeader}>
+          <h3>Terms and Conditions</h3>
+          <button
+            className={styles.closeButton}
+            onClick={() => setIsWaiverModalOpen(false)}
+          >
+            ×
+          </button>
+        </div>
+        <div className={styles.modalForm}>
+          <p className={styles.textSm}>
+            {eventInfo.eventWaiverText || ''}
+          </p>
+        </div>
+      </div>
+    </div>
+  ) : null;
 
   const handleContinueWithoutGuest = () => {
     console.log('handleContinueWithoutGuest çağrıldı');
@@ -527,6 +563,7 @@ const GuestRsvp = () => {
             {t('rsvpEmail') || 'RSVP'}: <a href="mailto:ankara.rsvp@international.gc.ca" className={styles.textRed600}>ankara.rsvp@international.gc.ca</a>
           </p>
         </div>
+        {waiverModal}
       </div>
     );
   }
@@ -822,9 +859,40 @@ const GuestRsvp = () => {
             {t('sociallyYours')}
           </p>
           {error && <p className={styles.textRed500}>{error}</p>}
+          <div className={styles.waiverContainer}>
+            <label className={styles.waiverLabel}>
+              <input
+                type="checkbox"
+                checked={waiverAccepted}
+                onChange={(e) => {
+                  setWaiverAccepted(e.target.checked);
+                  if (e.target.checked) {
+                    setWaiverError(false);
+                  }
+                }}
+                className={`${styles.waiverCheckbox} ${waiverError ? styles.waiverCheckboxError : ''}`}
+              />
+              <span>
+                By checking this box, I confirm that I have read, understood, and agree to the{' '}
+                <button
+                  type="button"
+                  className={styles.termsLink}
+                  onClick={() => setIsWaiverModalOpen(true)}
+                >
+                  terms and conditions
+                </button>
+                .
+              </span>
+            </label>
+            {waiverError && (
+              <div className={styles.waiverErrorText}>
+                Please accept the terms and conditions to continue.
+              </div>
+            )}
+          </div>
           <div className={styles.buttonContainer}>
             <button
-              onClick={() => handleResponse(true)}
+              onClick={handleAttendClick}
               className={styles.bgRed600}
               disabled={!guest}
             >
