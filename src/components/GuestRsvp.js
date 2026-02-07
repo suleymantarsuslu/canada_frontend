@@ -907,6 +907,7 @@ const GuestRsvp = () => {
             </button>
           </div>
         </div>
+        {waiverModal}
       </div>
     );
   }
