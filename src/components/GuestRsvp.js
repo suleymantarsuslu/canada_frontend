@@ -299,7 +299,7 @@ const GuestRsvp = () => {
           </button>
         </div>
         <div className={styles.modalForm}>
-          <p className={styles.textSm}>
+          <p className={`${styles.textSm} ${styles.modalText}`}>
             {eventInfo.eventWaiverText || ''}
           </p>
         </div>

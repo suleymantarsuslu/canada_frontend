@@ -567,6 +567,10 @@
   color: #ffffff;
 }
 
+.modalText {
+  white-space: pre-wrap;
+}
+
 .formGroup {
   display: flex;
   flex-direction: column;
