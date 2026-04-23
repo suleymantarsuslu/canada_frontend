@@ -165,12 +165,14 @@ const ParticipantList = () => {
     const filteredGuests = selectedGuestType === 'ALL GUESTS'
       ? allGuests
       : allGuests.filter(guest => guest.guestType === selectedGuestType);
+    const rsvpLinkHeader = t('openRsvpLink') || 'RSVP Link';
 
     const data = filteredGuests.map(g => ({
       [t('firstName')]: g.firstName,
       [t('lastName')]: g.lastName,
       [t('email')]: g.email,
       [t('qrId')]: g.qrId,
+      [rsvpLinkHeader]: g.qrId ? `${window.location.origin}/rsvp/${g.qrId}` : '',
       [t('plusOneCount')]: g.guests ? g.guests.length : 0,
       [t('guestType')]: g.guestType,
       [t('willAttend')]: g.willAttend ? t('yes') : t('no'),
