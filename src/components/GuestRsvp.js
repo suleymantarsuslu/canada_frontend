@@ -47,6 +47,7 @@ const GuestRsvp = () => {
   const [showGuestForm, setShowGuestForm] = useState(false);
   const [showDeclineMessage, setShowDeclineMessage] = useState(false);
   const [guestData, setGuestData] = useState({ firstName: '', lastName: '', email: '' });
+  const [isGuestSubmitting, setIsGuestSubmitting] = useState(false);
   const [maxGuests, setMaxGuests] = useState(0);
   const [eventInfo, setEventInfo] = useState({
     eventName: '',
@@ -248,7 +249,10 @@ const GuestRsvp = () => {
 
   const handleGuestSubmit = async (e) => {
     e.preventDefault();
+    if (isGuestSubmitting) return;
+
     console.log('handleGuestSubmit çağrıldı, guestData:', guestData);
+    setIsGuestSubmitting(true);
     try {
       const response = await axios.post(
         `${API_URL}/api/public/add-guest/${qrId}`,
@@ -274,6 +278,8 @@ const GuestRsvp = () => {
       setError(errorMessage);
       console.error('handleGuestSubmit hatası:', err.response?.data || err.message);
       alert(errorMessage);
+    } finally {
+      setIsGuestSubmitting(false);
     }
   };
 
@@ -308,6 +314,7 @@ const GuestRsvp = () => {
   ) : null;
 
   const handleContinueWithoutGuest = () => {
+    if (isGuestSubmitting) return;
     console.log('handleContinueWithoutGuest çağrıldı');
     setShowGuestForm(false);
     navigate(`/rsvp/${qrId}`);
@@ -696,6 +703,7 @@ const GuestRsvp = () => {
               name="firstName"
               value={guestData.firstName}
               onChange={handleGuestInputChange}
+              disabled={isGuestSubmitting}
               placeholder={t('guestsFirstName') || 'Misafir Adı'}
               className={styles.input}
             />
@@ -704,6 +712,7 @@ const GuestRsvp = () => {
               name="lastName"
               value={guestData.lastName}
               onChange={handleGuestInputChange}
+              disabled={isGuestSubmitting}
               placeholder={t('guestsLastName') || 'Misafir Soyadı'}
               className={styles.input}
             />
@@ -712,19 +721,29 @@ const GuestRsvp = () => {
               name="email"
               value={guestData.email}
               onChange={handleGuestInputChange}
+              disabled={isGuestSubmitting}
               placeholder={t('guestsEmail') || 'Misafir E-posta'}
               className={styles.input}
             />
+            {isGuestSubmitting && (
+              <p className={styles.textLg}>
+                {t('processing') || 'Processing...'}
+              </p>
+            )}
             <div className={styles.buttonContainerSmall}>
               <button
                 onClick={handleGuestSubmit}
                 className={styles.bgRed600}
+                disabled={isGuestSubmitting}
+                style={{ opacity: isGuestSubmitting ? 0.6 : 1, cursor: isGuestSubmitting ? 'not-allowed' : 'pointer' }}
               >
-                {t('submitGuest') || 'Misafir Ekle'}
+                {isGuestSubmitting ? (t('processing') || 'Processing...') : (t('submitGuest') || 'Misafir Ekle')}
               </button>
               <button
                 onClick={handleContinueWithoutGuest}
                 className={styles.bgWhite}
+                disabled={isGuestSubmitting}
+                style={{ opacity: isGuestSubmitting ? 0.6 : 1, cursor: isGuestSubmitting ? 'not-allowed' : 'pointer' }}
               >
                 {t('continueWithoutGuest') || 'Misafirsiz Devam Et'}
               </button>

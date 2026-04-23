@@ -162,9 +162,10 @@ const ParticipantList = () => {
   };
 
   const handleExportToExcel = () => {
+    const attendingGuests = allGuests.filter(guest => guest.willAttend);
     const filteredGuests = selectedGuestType === 'ALL GUESTS'
-      ? allGuests
-      : allGuests.filter(guest => guest.guestType === selectedGuestType);
+      ? attendingGuests
+      : attendingGuests.filter(guest => guest.guestType === selectedGuestType);
     const rsvpLinkHeader = t('openRsvpLink') || 'RSVP Link';
 
     const data = filteredGuests.map(g => ({
