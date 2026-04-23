@@ -245,12 +245,14 @@ useEffect(() => {
         return;
       }
 
+      const rsvpLinkHeader = t('openRsvpLink') || 'RSVP Link';
       const headers = [
         t('firstName'),
         t('lastName'),
         t('email'),
         t('guestType'),
         t('qrId'),
+        rsvpLinkHeader,
         t('plusOneCount'),
         t('responded'),
         t('willAttend'),
@@ -264,6 +266,7 @@ useEffect(() => {
         [t('email')]: guest.email,
         [t('guestType')]: guest.guestType,
         [t('qrId')]: guest.qrId || '',
+        [rsvpLinkHeader]: guest.qrId ? `${window.location.origin}/rsvp/${guest.qrId}` : '',
         [t('plusOneCount')]: guest.guests ? guest.guests.length : 0,
         [t('responded')]: guest.responded ? t('yes') : t('no'),
         [t('willAttend')]: guest.willAttend ? t('yes') : t('no'),
