@@ -749,6 +749,37 @@ const AdminSettings = () => {
     }
   };
 
+  const handleGeneralRsvpLinkRefresh = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setError(`${t('error')}: ${t('noAuthToken')}`);
+      setIsErrorModalOpen(true);
+      return;
+    }
+
+    setIsGeneratingGeneralRsvpLink(true);
+    try {
+      const response = await axios.post(
+        'https://backend.canada-ankara.com/api/admin/general-rsvp-link',
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Accept-Language': t('i18n.language'),
+          },
+        }
+      );
+      const generatedLink = `${window.location.origin}/general-rsvp/${response.data.token}`;
+      setGeneralRsvpLink(generatedLink);
+    } catch (err) {
+      const errorMessage = err.response?.data?.message || 'General RSVP link yenilenemedi';
+      setError(`${t('error')}: ${errorMessage}`);
+      setIsErrorModalOpen(true);
+    } finally {
+      setIsGeneratingGeneralRsvpLink(false);
+    }
+  };
+
   const copyGeneralRsvpLink = async () => {
     if (!generalRsvpLink) return;
     try {
@@ -1603,12 +1634,27 @@ const AdminSettings = () => {
               </div>
               <div className="modal-body">
                 <p className="mb-2">Bu link ile herkes Regular olarak kaydolabilir:</p>
-                <input
-                  type="text"
-                  className="form-control"
-                  value={generalRsvpLink}
-                  readOnly
-                />
+                <div className="input-group">
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={generalRsvpLink}
+                    readOnly
+                  />
+                  <button
+                    type="button"
+                    className="btn btn-outline-secondary"
+                    onClick={handleGeneralRsvpLinkRefresh}
+                    disabled={isGeneratingGeneralRsvpLink}
+                    title="Linki yenile"
+                    aria-label="Linki yenile"
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <path d="M20 12a8 8 0 1 1-2.34-5.66" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                      <path d="M20 4v6h-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </button>
+                </div>
               </div>
               <div className="modal-footer">
                 <button

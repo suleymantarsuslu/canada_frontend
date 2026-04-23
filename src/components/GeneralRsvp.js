@@ -1,8 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
+import styles from './GuestRsvp.module.css';
+import CanadaFlag from '../assets/canada_flag.png';
 
 const API_URL = 'https://backend.canada-ankara.com';
+
+const CalendarIcon = () => (
+  <svg className={styles.icon} viewBox="0 0 24 24" fill="#dc2626">
+    <path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zM5 8V6h14v2H5z" />
+  </svg>
+);
+
+const LocationIcon = () => (
+  <svg className={styles.icon} viewBox="0 0 24 24" fill="#dc2626">
+    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z" />
+  </svg>
+);
 
 const GeneralRsvp = () => {
   const { token } = useParams();
@@ -34,7 +48,12 @@ const GeneralRsvp = () => {
           axios.get(`${API_URL}/api/public/event-information`),
         ]);
 
-        setIsLinkValid(validateResponse.data.valid === true);
+        if (validateResponse.data.valid !== true) {
+          navigate('/not-found', { replace: true });
+          return;
+        }
+
+        setIsLinkValid(true);
         setIsRsvpEnabled(validateResponse.data.rsvpEnabled !== false);
         setEventInfo({
           eventName: eventInfoResponse.data.eventName || '',
@@ -44,15 +63,14 @@ const GeneralRsvp = () => {
           eventAddress: eventInfoResponse.data.eventAddress || '',
         });
       } catch (err) {
-        setIsLinkValid(false);
-        setError(err.response?.data?.message || 'Link gecersiz veya suresi dolmus.');
+        navigate('/not-found', { replace: true });
       } finally {
         setLoading(false);
       }
     };
 
     fetchData();
-  }, [token]);
+  }, [token, navigate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -88,17 +106,23 @@ const GeneralRsvp = () => {
 
   if (loading) {
     return (
-      <div className="container mt-5 text-center">
-        <h4>Yukleniyor...</h4>
+      <div className={styles.body}>
+        <div className={styles.content}>
+          <h4>Yukleniyor...</h4>
+        </div>
       </div>
     );
   }
 
   if (!isLinkValid) {
     return (
-      <div className="container mt-5" style={{ maxWidth: '720px' }}>
-        <div className="alert alert-danger">
-          {error || 'Bu RSVP linki gecersiz veya suresi dolmus.'}
+      <div className={styles.body}>
+        <div className={styles.container}>
+          <div className={styles.content}>
+            <div className={styles.textRed500}>
+              {error || 'Bu RSVP linki gecersiz veya suresi dolmus.'}
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -106,69 +130,104 @@ const GeneralRsvp = () => {
 
   if (!isRsvpEnabled) {
     return (
-      <div className="container mt-5" style={{ maxWidth: '720px' }}>
-        <div className="alert alert-warning">
-          Genel RSVP kayitlari su anda kapali.
+      <div className={styles.body}>
+        <div className={styles.container}>
+          <div
+            className={styles.containerBackground}
+            style={{
+              backgroundImage: `url(${CanadaFlag})`,
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: 'contain',
+              backgroundPosition: 'center',
+            }}
+          ></div>
+          <div className={styles.content}>
+            <h1 className={styles.h1}>
+              <div>General RSVP</div>
+              <div>{eventInfo.eventName || 'Event Registration'}</div>
+            </h1>
+            <p className={styles.textXl}>Genel RSVP kayitlari su anda kapali.</p>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="container mt-5" style={{ maxWidth: '720px' }}>
-      <div className="card shadow-sm">
-        <div className="card-body p-4">
-          <h3 className="mb-3">General RSVP</h3>
-          {eventInfo.eventName && <h5 className="mb-3">{eventInfo.eventName}</h5>}
-          {eventInfo.eventDate && <p className="mb-1"><strong>Tarih:</strong> {eventInfo.eventDate}</p>}
-          {eventInfo.eventTime && <p className="mb-1"><strong>Saat:</strong> {eventInfo.eventTime}</p>}
-          {eventInfo.eventLocation && <p className="mb-1"><strong>Yer:</strong> {eventInfo.eventLocation}</p>}
-          {eventInfo.eventAddress && <p className="text-muted">{eventInfo.eventAddress}</p>}
+    <div className={styles.body}>
+      <div className={styles.container}>
+        <div
+          className={styles.containerBackground}
+          style={{
+            backgroundImage: `url(${CanadaFlag})`,
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'contain',
+            backgroundPosition: 'center',
+          }}
+        ></div>
+        <div className={styles.content}>
+          <h1 className={styles.h1}>
+            <div>General RSVP</div>
+            <div>{eventInfo.eventName || 'Event Registration'}</div>
+          </h1>
 
-          <hr />
-          <p className="mb-3">Kayit olmak icin bilgilerinizi doldurun.</p>
+          <p className={styles.textLg}>Kayit olmak icin bilgilerinizi doldurun.</p>
+          {eventInfo.eventDate && (
+            <p className={styles.textXl}>
+              <CalendarIcon />
+              {eventInfo.eventDate}
+            </p>
+          )}
+          {eventInfo.eventTime && <p className={styles.textLg}>{eventInfo.eventTime}</p>}
+          {eventInfo.eventLocation && (
+            <p className={styles.textLg}>
+              <LocationIcon />
+              {eventInfo.eventLocation}
+            </p>
+          )}
+          {eventInfo.eventAddress && <p className={styles.textSm}>{eventInfo.eventAddress}</p>}
 
-          <form onSubmit={handleSubmit}>
-            <div className="mb-3">
-              <label className="form-label">Isim</label>
+          <form onSubmit={handleSubmit} className={styles.formContainer} style={{ marginTop: '1.5rem' }}>
+            <div>
+              <label className={styles.textSm} style={{ display: 'block', marginBottom: '0.4rem' }}>Isim</label>
               <input
                 type="text"
                 name="firstName"
-                className="form-control"
+                className={styles.input}
                 value={formData.firstName}
                 onChange={handleChange}
                 required
               />
             </div>
 
-            <div className="mb-3">
-              <label className="form-label">Soyisim</label>
+            <div>
+              <label className={styles.textSm} style={{ display: 'block', marginBottom: '0.4rem' }}>Soyisim</label>
               <input
                 type="text"
                 name="lastName"
-                className="form-control"
+                className={styles.input}
                 value={formData.lastName}
                 onChange={handleChange}
                 required
               />
             </div>
 
-            <div className="mb-3">
-              <label className="form-label">E-posta</label>
+            <div>
+              <label className={styles.textSm} style={{ display: 'block', marginBottom: '0.4rem' }}>E-posta</label>
               <input
                 type="email"
                 name="email"
-                className="form-control"
+                className={styles.input}
                 value={formData.email}
                 onChange={handleChange}
                 required
               />
             </div>
 
-            {error && <div className="alert alert-danger">{error}</div>}
-            {success && <div className="alert alert-success">{success}</div>}
+            {error && <div className={styles.textRed500}>{error}</div>}
+            {success && <div className={styles.textLg}>{success}</div>}
 
-            <button type="submit" className="btn btn-canada" disabled={submitting}>
+            <button type="submit" className={styles.bgRed600} disabled={submitting}>
               {submitting ? 'Kaydediliyor...' : 'Kaydol ve Bileti Goster'}
             </button>
           </form>
