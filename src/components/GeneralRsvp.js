@@ -93,12 +93,12 @@ const GeneralRsvp = () => {
         email: formData.email,
       });
 
-      setSuccess('Kayit tamamlandi, bilet sayfasina yonlendiriliyorsunuz...');
+      setSuccess('Registration completed, redirecting you to the ticket page...');
       setTimeout(() => {
         navigate(`/rsvp/${response.data.qrId}`);
       }, 700);
     } catch (err) {
-      setError(err.response?.data?.message || 'Kayit sirasinda bir hata olustu.');
+      setError(err.response?.data?.message || 'An error occurred during registration.');
     } finally {
       setSubmitting(false);
     }
@@ -108,7 +108,7 @@ const GeneralRsvp = () => {
     return (
       <div className={styles.body}>
         <div className={styles.content}>
-          <h4>Yukleniyor...</h4>
+          <h4>Loading...</h4>
         </div>
       </div>
     );
@@ -120,7 +120,7 @@ const GeneralRsvp = () => {
         <div className={styles.container}>
           <div className={styles.content}>
             <div className={styles.textRed500}>
-              {error || 'Bu RSVP linki gecersiz veya suresi dolmus.'}
+              {error || 'This RSVP link is invalid or expired.'}
             </div>
           </div>
         </div>
@@ -143,10 +143,10 @@ const GeneralRsvp = () => {
           ></div>
           <div className={styles.content}>
             <h1 className={styles.h1}>
-              <div>General RSVP</div>
+              <div>Canada Club Resresents</div>
               <div>{eventInfo.eventName || 'Event Registration'}</div>
             </h1>
-            <p className={styles.textXl}>Genel RSVP kayitlari su anda kapali.</p>
+            <p className={styles.textXl}>General RSVP registrations are currently closed.</p>
           </div>
         </div>
       </div>
@@ -167,11 +167,11 @@ const GeneralRsvp = () => {
         ></div>
         <div className={styles.content}>
           <h1 className={styles.h1}>
-            <div>General RSVP</div>
+            <div>Canada Club Resresents</div>
             <div>{eventInfo.eventName || 'Event Registration'}</div>
           </h1>
 
-          <p className={styles.textLg}>Kayit olmak icin bilgilerinizi doldurun.</p>
+          <p className={styles.textLg}>Please fill in your information to register.</p>
           {eventInfo.eventDate && (
             <p className={styles.textXl}>
               <CalendarIcon />
@@ -189,7 +189,7 @@ const GeneralRsvp = () => {
 
           <form onSubmit={handleSubmit} className={styles.formContainer} style={{ marginTop: '1.5rem' }}>
             <div>
-              <label className={styles.textSm} style={{ display: 'block', marginBottom: '0.4rem' }}>Isim</label>
+              <label className={styles.textSm} style={{ display: 'block', marginBottom: '0.4rem' }}>First Name</label>
               <input
                 type="text"
                 name="firstName"
@@ -201,7 +201,7 @@ const GeneralRsvp = () => {
             </div>
 
             <div>
-              <label className={styles.textSm} style={{ display: 'block', marginBottom: '0.4rem' }}>Soyisim</label>
+              <label className={styles.textSm} style={{ display: 'block', marginBottom: '0.4rem' }}>Last Name</label>
               <input
                 type="text"
                 name="lastName"
@@ -213,7 +213,7 @@ const GeneralRsvp = () => {
             </div>
 
             <div>
-              <label className={styles.textSm} style={{ display: 'block', marginBottom: '0.4rem' }}>E-posta</label>
+              <label className={styles.textSm} style={{ display: 'block', marginBottom: '0.4rem' }}>Email</label>
               <input
                 type="email"
                 name="email"
@@ -228,7 +228,7 @@ const GeneralRsvp = () => {
             {success && <div className={styles.textLg}>{success}</div>}
 
             <button type="submit" className={styles.bgRed600} disabled={submitting}>
-              {submitting ? 'Kaydediliyor...' : 'Kaydol ve Bileti Goster'}
+              {submitting ? 'Registering...' : 'Register and View Ticket'}
             </button>
           </form>
         </div>
