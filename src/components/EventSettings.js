@@ -245,7 +245,7 @@ useEffect(() => {
         return;
       }
 
-      const rsvpLinkHeader = t('openRsvpLink') || 'RSVP Link';
+      const rsvpLinkHeader = 'RSVP LINK';
       const headers = [
         t('firstName'),
         t('lastName'),

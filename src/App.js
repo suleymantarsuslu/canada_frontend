@@ -16,6 +16,7 @@ import Invitation from './components/Invitation';
 import AdminSettings from './components/AdminSettings';
 import Confirmation from './components/Confirmation';
 import GuestRsvp from './components/GuestRsvp';
+import GeneralRsvp from './components/GeneralRsvp';
 import NotFound from './components/NotFound';
 
 const App = () => {
@@ -159,6 +160,7 @@ const App = () => {
       path.startsWith('/invitation') ||
       path === '/confirmation' ||
       path.startsWith('/rsvp') ||
+      path.startsWith('/general-rsvp') ||
       path === '/'
     );
   };
@@ -181,7 +183,8 @@ const App = () => {
       ];
       const isValidRoute = validRoutes.includes(location.pathname) || 
                           location.pathname.startsWith('/invitation') || 
-                          location.pathname.startsWith('/rsvp');
+                          location.pathname.startsWith('/rsvp') ||
+                          location.pathname.startsWith('/general-rsvp');
       if (!isValidRoute) {
         navigate('/not-found', { replace: true });
       }
@@ -238,7 +241,7 @@ const App = () => {
 
   return (
     <>
-      {!(location.pathname.startsWith('/rsvp') || location.pathname === '/not-found') && (
+      {!(location.pathname.startsWith('/rsvp') || location.pathname.startsWith('/general-rsvp') || location.pathname === '/not-found') && (
         <Navbar
           token={token}
           setToken={setToken}
@@ -366,6 +369,7 @@ const App = () => {
         />
         <Route path="/invitation/:qrId" element={<Invitation />} />
         <Route path="/rsvp/:qrId" element={<GuestRsvp />} />
+        <Route path="/general-rsvp/:token" element={<GeneralRsvp />} />
         <Route path="/confirmation" element={<Confirmation />} />
         <Route path="/not-found" element={<NotFound />} />
         <Route path="*" element={<NotFound />} />

@@ -19,6 +19,9 @@ const AdminSettings = () => {
   const [isVolunteerSettingsModalOpen, setIsVolunteerSettingsModalOpen] = useState(false);
   const [isEventInformationModalOpen, setIsEventInformationModalOpen] = useState(false);
   const [isParticipantLimitModalOpen, setIsParticipantLimitModalOpen] = useState(false);
+  const [isGeneralRsvpModalOpen, setIsGeneralRsvpModalOpen] = useState(false);
+  const [generalRsvpLink, setGeneralRsvpLink] = useState('');
+  const [isGeneratingGeneralRsvpLink, setIsGeneratingGeneralRsvpLink] = useState(false);
   const [volunteers, setVolunteers] = useState([]);
   const [participantLimit, setParticipantLimit] = useState('');
   const [currentParticipantCount, setCurrentParticipantCount] = useState(0);
@@ -713,6 +716,49 @@ const AdminSettings = () => {
     setIsParticipantLimitModalOpen(true);
   };
 
+  const handleGeneralRsvpLinkClick = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setError(`${t('error')}: ${t('noAuthToken')}`);
+      setIsErrorModalOpen(true);
+      return;
+    }
+
+    setIsGeneratingGeneralRsvpLink(true);
+    try {
+      const response = await axios.post(
+        'https://backend.canada-ankara.com/api/admin/general-rsvp-link',
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Accept-Language': t('i18n.language'),
+          },
+        }
+      );
+
+      const generatedLink = `${window.location.origin}/general-rsvp/${response.data.token}`;
+      setGeneralRsvpLink(generatedLink);
+      setIsGeneralRsvpModalOpen(true);
+    } catch (err) {
+      const errorMessage = err.response?.data?.message || 'General RSVP link olusturulamadi';
+      setError(`${t('error')}: ${errorMessage}`);
+      setIsErrorModalOpen(true);
+    } finally {
+      setIsGeneratingGeneralRsvpLink(false);
+    }
+  };
+
+  const copyGeneralRsvpLink = async () => {
+    if (!generalRsvpLink) return;
+    try {
+      await navigator.clipboard.writeText(generalRsvpLink);
+      alert('General RSVP link kopyalandi');
+    } catch (err) {
+      alert('Link kopyalanamadi, lutfen manuel kopyalayin');
+    }
+  };
+
   const handleParticipantLimitSave = async () => {
     const token = localStorage.getItem('token');
     if (!token) {
@@ -1087,6 +1133,13 @@ const AdminSettings = () => {
                     </label>
                   </div>
                 </div>
+                <button
+                  onClick={handleGeneralRsvpLinkClick}
+                  className="btn btn-canada mb-3"
+                  disabled={isGeneratingGeneralRsvpLink}
+                >
+                  {isGeneratingGeneralRsvpLink ? 'Generating General RSVP link...' : 'General RSVP link'}
+                </button>
                 <button
                   onClick={handleParticipantLimitClick}
                   className="btn btn-canada mb-3"
@@ -1529,6 +1582,48 @@ const AdminSettings = () => {
                   onClick={handleParticipantLimitSave}
                 >
                   {t('save') || 'Kaydet'}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {isGeneralRsvpModalOpen && (
+        <div className="modal fade show d-block" tabIndex="-1" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">General RSVP link</h5>
+                <button
+                  type="button"
+                  className="btn-close"
+                  onClick={() => setIsGeneralRsvpModalOpen(false)}
+                ></button>
+              </div>
+              <div className="modal-body">
+                <p className="mb-2">Bu link ile herkes Regular olarak kaydolabilir:</p>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={generalRsvpLink}
+                  readOnly
+                />
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-canada-secondary"
+                  onClick={() => setIsGeneralRsvpModalOpen(false)}
+                >
+                  {t('close_button')}
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-canada"
+                  onClick={copyGeneralRsvpLink}
+                >
+                  Linki kopyala
                 </button>
               </div>
             </div>

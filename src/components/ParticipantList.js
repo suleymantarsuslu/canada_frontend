@@ -166,7 +166,7 @@ const ParticipantList = () => {
     const filteredGuests = selectedGuestType === 'ALL GUESTS'
       ? attendingGuests
       : attendingGuests.filter(guest => guest.guestType === selectedGuestType);
-    const rsvpLinkHeader = t('openRsvpLink') || 'RSVP Link';
+    const rsvpLinkHeader = 'RSVP LINK';
     const headers = [
       t('firstName'),
       t('lastName'),
