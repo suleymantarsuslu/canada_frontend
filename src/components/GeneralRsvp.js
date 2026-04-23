@@ -143,7 +143,7 @@ const GeneralRsvp = () => {
           ></div>
           <div className={styles.content}>
             <h1 className={styles.h1}>
-              <div>Canada Club Resresents</div>
+              <div>Kanada Club</div>
               <div>{eventInfo.eventName || 'Event Registration'}</div>
             </h1>
             <p className={styles.textXl}>General RSVP registrations are currently closed.</p>
@@ -167,7 +167,7 @@ const GeneralRsvp = () => {
         ></div>
         <div className={styles.content}>
           <h1 className={styles.h1}>
-            <div>Canada Club Resresents</div>
+            <div>Kanada Club</div>
             <div>{eventInfo.eventName || 'Event Registration'}</div>
           </h1>
 
