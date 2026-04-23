@@ -287,6 +287,7 @@ const resources = {
 
       retryOrContact: 'Lütfen sayfayı yenileyip tekrar deneyiniz. Eğer hata devam ediyorsa ankara.rsvp@international.gc.ca adresini kullanarak bizimle iletişime geçiniz.',
       rsvpClosedMessage: 'Üzgünüz fakat kayıtlarımız sona ermiştir. Talep ve sorularınız için ile iletişime geçebilirsiniz.',
+      participantLimitReached: 'Katilimci limiti doldugu icin RSVP kapatildi.',
       openRsvpLink: 'Davetiye linkini aç',
       unknownGuest: 'Bilinmeyen Davetli',
       excelHeadersInstruction: 'Tablonun şu başlıkları içerdiğinden emin olun: Ad, Soyad, E-posta, Davetli Türü',
@@ -664,6 +665,7 @@ const resources = {
       duplicateEmailInDb: 'This email address is already in use, please enter a different email.',
       retryOrContact: 'Please refresh the page and try again. If the error persists, contact us at ankara.rsvp@international.gc.ca.',
       rsvpClosedMessage: 'We’re sorry, but our registration has closed. For inquiries, please contact.',
+      participantLimitReached: 'RSVP has been closed because the participant limit has been reached.',
       openRsvpLink: 'Open invitation link',
       unknownGuest: 'Unknown Guest',
       excelHeadersInstruction: 'Please ensure your table includes the following headers: First Name, Last Name, Email, Guest Type',
@@ -1025,6 +1027,7 @@ const resources = {
       duplicateEmailInDb: 'Cette adresse e-mail est déjà utilisée, veuillez entrer une autre adresse e-mail.',
       retryOrContact: 'Pour toutes questions: ankara.rsvp@international.gc.ca',
       rsvpClosedMessage: 'Nous sommes désolés, mais l’inscription est close. Pour toute question, veuillez contacter.',
+      participantLimitReached: 'Le RSVP est ferme car la limite de participants est atteinte.',
       openRsvpLink: 'Ouvrir le lien d’invitation',
       unknownGuest: 'Invité inconnu',
       excelHeadersInstruction: 'Veuillez vous assurer que votre tableau comprend les en-têtes suivants : Prénom, Nom de famille, E-mail, Type d’invité',

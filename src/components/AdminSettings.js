@@ -18,7 +18,10 @@ const AdminSettings = () => {
   const [isGuestTypeSettingsModalOpen, setIsGuestTypeSettingsModalOpen] = useState(false);
   const [isVolunteerSettingsModalOpen, setIsVolunteerSettingsModalOpen] = useState(false);
   const [isEventInformationModalOpen, setIsEventInformationModalOpen] = useState(false);
+  const [isParticipantLimitModalOpen, setIsParticipantLimitModalOpen] = useState(false);
   const [volunteers, setVolunteers] = useState([]);
+  const [participantLimit, setParticipantLimit] = useState('');
+  const [currentParticipantCount, setCurrentParticipantCount] = useState(0);
   const [eventInformation, setEventInformation] = useState({
     eventName: '',
     eventDate: '',
@@ -134,6 +137,7 @@ const AdminSettings = () => {
     loadGuestTypeSettings();
     loadVolunteerSettings();
     loadEventInformation();
+    loadParticipantLimit();
   }, [t]);
 
   const checkVolunteerSystemStatus = async () => {
@@ -219,6 +223,30 @@ const AdminSettings = () => {
         eventAddress: '',
         eventWaiverText: DEFAULT_EVENT_WAIVER_TEXT
       });
+    }
+  };
+
+  const loadParticipantLimit = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      return;
+    }
+
+    try {
+      const response = await axios.get('https://backend.canada-ankara.com/api/admin/participant-limit', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setParticipantLimit(
+        response.data.participantLimit === null || response.data.participantLimit === undefined
+          ? ''
+          : String(response.data.participantLimit)
+      );
+      setCurrentParticipantCount(response.data.currentParticipantCount || 0);
+      setError('');
+    } catch (error) {
+      console.error('Participant limit alma hatası:', error);
+      setParticipantLimit('');
+      setCurrentParticipantCount(0);
     }
   };
 
@@ -680,6 +708,57 @@ const AdminSettings = () => {
     }
   };
 
+  const handleParticipantLimitClick = async () => {
+    await loadParticipantLimit();
+    setIsParticipantLimitModalOpen(true);
+  };
+
+  const handleParticipantLimitSave = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setError(`${t('error')}: ${t('noAuthToken')}`);
+      setIsErrorModalOpen(true);
+      return;
+    }
+
+    let parsedLimit = null;
+    if (participantLimit !== '') {
+      parsedLimit = Number(participantLimit);
+      if (!Number.isInteger(parsedLimit) || parsedLimit < 1) {
+        alert('Participant limit en az 1 olmalıdır');
+        return;
+      }
+    }
+
+    try {
+      const response = await axios.post(
+        'https://backend.canada-ankara.com/api/admin/participant-limit',
+        { participantLimit: parsedLimit },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Accept-Language': t('i18n.language'),
+          },
+        }
+      );
+
+      setParticipantLimit(
+        response.data.participantLimit === null || response.data.participantLimit === undefined
+          ? ''
+          : String(response.data.participantLimit)
+      );
+      setCurrentParticipantCount(response.data.currentParticipantCount || 0);
+      setRsvpEnabled(response.data.rsvpEnabled !== false);
+      setIsParticipantLimitModalOpen(false);
+      alert('Participant limit başarıyla kaydedildi');
+      setError('');
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || 'Participant limit kaydedilemedi';
+      setError(`${t('error')}: ${errorMessage}`);
+      setIsErrorModalOpen(true);
+    }
+  };
+
   const handleEventInformationSave = async () => {
     const token = localStorage.getItem('token');
     if (!token) {
@@ -1008,6 +1087,12 @@ const AdminSettings = () => {
                     </label>
                   </div>
                 </div>
+                <button
+                  onClick={handleParticipantLimitClick}
+                  className="btn btn-canada mb-3"
+                >
+                  Participant Limit
+                </button>
                 <button
                   onClick={handleEventInformationClick}
                   className="btn btn-canada mb-3"
@@ -1394,6 +1479,54 @@ const AdminSettings = () => {
                   type="button"
                   className="btn btn-canada"
                   onClick={handleGuestTypeSettingsSave}
+                >
+                  {t('save') || 'Kaydet'}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {isParticipantLimitModalOpen && (
+        <div className="modal fade show d-block" tabIndex="-1" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Participant Limit</h5>
+                <button
+                  type="button"
+                  className="btn-close"
+                  onClick={() => setIsParticipantLimitModalOpen(false)}
+                ></button>
+              </div>
+              <div className="modal-body">
+                <p className="mb-2">Current participants: {currentParticipantCount}</p>
+                <p className="text-muted mb-3">
+                  Limiti bos birakirsaniz sinirsiz olur. Limit dolunca RSVP otomatik kapanir.
+                </p>
+                <label className="form-label">Participant Limit</label>
+                <input
+                  type="number"
+                  className="form-control"
+                  min="1"
+                  value={participantLimit}
+                  onChange={(e) => setParticipantLimit(e.target.value)}
+                  placeholder="No limit"
+                />
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-canada-secondary"
+                  onClick={() => setIsParticipantLimitModalOpen(false)}
+                >
+                  {t('cancel') || 'Iptal'}
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-canada"
+                  onClick={handleParticipantLimitSave}
                 >
                   {t('save') || 'Kaydet'}
                 </button>
