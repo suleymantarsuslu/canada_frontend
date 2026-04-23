@@ -167,21 +167,33 @@ const ParticipantList = () => {
       ? attendingGuests
       : attendingGuests.filter(guest => guest.guestType === selectedGuestType);
     const rsvpLinkHeader = t('openRsvpLink') || 'RSVP Link';
+    const headers = [
+      t('firstName'),
+      t('lastName'),
+      t('email'),
+      t('qrId'),
+      rsvpLinkHeader,
+      t('plusOneCount'),
+      t('guestType'),
+      t('willAttend'),
+      t('isCheckedIn'),
+      t('checkInTime'),
+    ];
 
-    const data = filteredGuests.map(g => ({
-      [t('firstName')]: g.firstName,
-      [t('lastName')]: g.lastName,
-      [t('email')]: g.email,
-      [t('qrId')]: g.qrId,
-      [rsvpLinkHeader]: g.qrId ? `${window.location.origin}/rsvp/${g.qrId}` : '',
-      [t('plusOneCount')]: g.guests ? g.guests.length : 0,
-      [t('guestType')]: g.guestType,
-      [t('willAttend')]: g.willAttend ? t('yes') : t('no'),
-      [t('isCheckedIn')]: g.isCheckedIn ? t('yes') : t('no'),
-      [t('checkInTime')]: g.checkInTime ? new Date(g.checkInTime).toLocaleString() : t('none'),
-    }));
+    const rows = filteredGuests.map(g => ([
+      g.firstName || '',
+      g.lastName || '',
+      g.email || '',
+      g.qrId || '',
+      g.qrId ? `${window.location.origin}/rsvp/${g.qrId}` : '',
+      g.guests ? g.guests.length : 0,
+      g.guestType || '',
+      g.willAttend ? t('yes') : t('no'),
+      g.isCheckedIn ? t('yes') : t('no'),
+      g.checkInTime ? new Date(g.checkInTime).toLocaleString() : t('none'),
+    ]));
 
-    const ws = XLSX.utils.json_to_sheet(data);
+    const ws = XLSX.utils.aoa_to_sheet([headers, ...rows]);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Guests');
     XLSX.writeFile(wb, `Guests_${selectedGuestType}.xlsx`);
